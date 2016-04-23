@@ -17,17 +17,17 @@
         "description": "list of accesses"
     },
     {
-        "id": "satellite/inode/default",
+        "id": "satellite/hinode/default",
         "name": "Inode",
         "availability": ["2012-03-15T10:00:00Z/2012-03-16T10:00:00Z"],
-        "description": "<h2>いので</h2>",
+        "description": "<h2>ひので</h2>",
         "billboard": {
             "image": "/images/hatsunemiku.jpg",
             "scale": 1.0,
             "show": true                          
         },
         "label": {
-            "text": "いので",
+            "text": "ひので",
             "font":"11pt Lucida Console",
             "fillColor": {"rgba": [ 0, 0, 0, 255 ]},
             "outlineWidth": 2,
