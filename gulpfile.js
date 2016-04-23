@@ -22,7 +22,8 @@ const paths = {
     serverFiles: [
         './server/*.js',
         './server/views/*.pug',
-        './server/controllers/*.js'
+        './server/controllers/*.js',
+        './server/resouces/*.js'
     ],
     resources: [
         './server/public/*.css'
