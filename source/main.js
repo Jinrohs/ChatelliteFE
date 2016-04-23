@@ -1,14 +1,8 @@
 'use strict';
 
 $(document).ready(function() {
-<<<<<<< Updated upstream
-    var viewer = new Cesium.Viewer('cesiumContainer');
-    var data = Cesium.CzmlDataSource.load('/api/czml/default');
-    //var data = Cesium.CzmlDataSource.load('/default.czml');    
-    console.log(data);
-=======
     var blackmarbleImageryProvider = Cesium.createTileMapServiceImageryProvider({
-        url : '//cesiumjs.org/tilesets/imagery/blackmarble',
+        url : '//cesiumjs.org/tilesets/imconagery/blackmarble',
         minimumLevel : 0,
         maximumLevel : 8
     });
@@ -30,6 +24,5 @@ $(document).ready(function() {
     // console.log(Cesium);
 
     var data = Cesium.CzmlDataSource.load('/api/czml/defualt');
->>>>>>> Stashed changes
     viewer.dataSources.add(data);
 });
