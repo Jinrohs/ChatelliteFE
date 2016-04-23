@@ -1,0 +1,53 @@
+[    {
+        "id": "document",
+        "name": "satecolle",
+        "version": "1.0",
+        "clock": {
+            "interval": "2012-03-15T10:05:00Z/2012-03-16T10:15:00Z",
+            "currentTime": "2012-03-15T10:00:00Z",
+            "multiplier": 60,
+            "range": "LOOP_STOP",
+            "step": "SYSTEM_CLOCK_MULTIPLIER"
+        }
+    },
+    {
+        "id": "satellite/hinode/2",
+        "name": "Inode",
+        "availability": ["2012-03-15T10:05:00Z/2012-03-15T10:15:00Z"],
+        "parent": "satellite/hinode/default",
+        "description": "<h2>いので</h2>",
+        "billboard": {
+            "image": "/images/hatsunemiku.jpg",
+            "scale": 1.0,
+            "show": true                          
+        },
+        "label": {
+            "text": "いので",
+            "font":"11pt Lucida Console",
+            "fillColor": {"rgba": [ 0, 0, 0, 255 ]},
+            "outlineWidth": 2,
+            "show": true
+        },
+        "path": {
+            "show": true,
+            "width": 1,
+            "material": {
+                "solidColor":{
+                    "color": {"rgba":[ 0,255,0,255 ] }
+                }
+            },
+            "resolution": 120
+        },
+        "position": {
+            "interpolationAlgorithm":"LAGRANGE",
+            "interpolationDegree":5,
+            "referenceFrame":"INERTIAL",
+            "epoch":"2012-03-15T10:05:00Z",
+            "cartesian": [
+        0,-6000251.41586053,3168038.65147806,-1983402.41619314,
+        300,-6086888.59948749,3583071.0890244,218668.596985674,
+        600,-5559191.47781264,3636465.81402216,2398566.73167249
+            ]
+        }        
+    }
+]

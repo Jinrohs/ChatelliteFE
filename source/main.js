@@ -7,7 +7,7 @@ $(document).ready(function() {
         infoBox: false,
         // homeButton: false,
         geocoder: false,
-        animation: false,
+        //animation: false,
         navigationInstructionsInitiallyVisible: false,
 
         imageryProvider : new Cesium.ArcGisMapServerImageryProvider({
@@ -28,4 +28,8 @@ $(document).ready(function() {
 
     var data = Cesium.CzmlDataSource.load('/api/czml/default');
     viewer.dataSources.add(data);
+    
+    viewer.dataSources.add(Cesium.CzmlDataSource.load('/default2.czml'));
+    viewer.dataSources.add(Cesium.CzmlDataSource.load('/default3.czml'));
+    
 });
