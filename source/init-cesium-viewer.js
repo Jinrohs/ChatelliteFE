@@ -81,15 +81,15 @@ module.exports = function () {
     //viewer.dataSources.add(Cesium.CzmlDataSource.load('/default3.czml'));
 
     // 衛星のクリックイベント
-    var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-
-    handler.setInputAction(function(event) {
-        var pickedObject = viewer.scene.pick(event.position);
-
-        if (Cesium.defined(pickedObject)) {
-            console.log(pickedObject.id.name);
-            // ここでpopupの中身を書き換える
-            $('#popup').removeClass('hide');
-        }
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    // var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+    //
+    // handler.setInputAction(function(event) {
+    //     var pickedObject = viewer.scene.pick(event.position);
+    //
+    //     if (Cesium.defined(pickedObject)) {
+    //         console.log(pickedObject.id.name);
+    //         // ここでpopupの中身を書き換える
+    //         $('#popup').removeClass('hide');
+    //     }
+    // }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 };

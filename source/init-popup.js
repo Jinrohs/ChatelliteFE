@@ -5,13 +5,6 @@ module.exports = function initPopup(viewer) {
     var $popupInner = $popup.find('#popup-inner');
 
     $popup.on('click', function () {
-        // $popup.addClass('hide');
-
-        // $popup.find('#popup-inner')
-        //     .css({
-        //         opacity: 0
-        //     });
-
         $popupInner
             .animate({
                 marginTop: 15,
@@ -22,7 +15,7 @@ module.exports = function initPopup(viewer) {
                         marginTop: 0,
                         opacity: 1
                     });
-                    
+
                 $popup.addClass('hide');
             });
     });
