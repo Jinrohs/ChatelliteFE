@@ -1,7 +1,7 @@
 'use strict';
 
 const reamingTimeForReload = 0.1;
-const timeInterval = 3600;
+const timeInterval = 7200;
 
 var viewer;
 var previousStopTime;
@@ -9,14 +9,14 @@ var previousStopTime;
 var onTickListener = function(clock) {
     if(isNextLoad(clock)) {
         loadNextOrbit(clock);
-    }    
+    }
     console.log(Math.round(Cesium.JulianDate.toDate(clock.currentTime).getTime() / 1000));
 };
 
 var isNextLoad = function(clock) {
     if(previousStopTime == undefined) {
         return true;
-    }    
+    }
     var reaming = Cesium.JulianDate.secondsDifference(clock.stopTime, clock.currentTime);
     return reaming <= reamingTimeForReload;
     //return false;
@@ -24,17 +24,17 @@ var isNextLoad = function(clock) {
 
 var loadNextOrbit = function(clock) {
     if(previousStopTime == undefined) {
-        //viewer.dataSources.add(Cesium.CzmlDataSource.load('/api/czml/default'));        
+        //viewer.dataSources.add(Cesium.CzmlDataSource.load('/api/czml/default'));
     }
     var timeRange = getNextTimeRange(clock);
     previousStopTime = timeRange.stopTime;
     var api = getApiUrl(timeRange);
-    console.log("loading..: " + api);    
-    viewer.dataSources.add(Cesium.CzmlDataSource.load(api));    
+    console.log("loading..: " + api);
+    viewer.dataSources.add(Cesium.CzmlDataSource.load(api));
 };
 
-var getNextTimeRange = function(clock) {    
-    var startTime = Math.round(new Date().getTime() / 1000);    
+var getNextTimeRange = function(clock) {
+    var startTime = Math.round(new Date().getTime() / 1000);
     if (previousStopTime != undefined) {
         console.log('update');
         startTime = previousStopTime;
@@ -73,14 +73,14 @@ module.exports = function () {
         blackMarble.alpha = 1.0;
         blackMarble.brightness = 1.0;
     }
-    viewer.clock.clockRange =  Cesium.ClockRange.LOOP_STOP;        
+    viewer.clock.clockRange =  Cesium.ClockRange.LOOP_STOP;
     viewer.dataSources.add(Cesium.CzmlDataSource.load('/api/czml/default'));
     viewer.clock.onTick.addEventListener(onTickListener);
     //viewer.dataSources.add(Cesium.CzmlDataSource.load('/default.czml'));
     //viewer.dataSources.add(Cesium.CzmlDataSource.load('/default2.czml'));
     //viewer.dataSources.add(Cesium.CzmlDataSource.load('/default3.czml'));
-    
-    // 衛星のクリックイベント    
+
+    // 衛星のクリックイベント
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
     handler.setInputAction(function(event) {
