@@ -10,7 +10,9 @@ html(lang='ja')
         block stylesheet
             link(rel='shortcut icon', href='/favicon.ico')
     body
-        p hello world!
+        #cesiumContainer
 
     block script
+        script(src='https://cesiumjs.org/Cesium/Build/Cesium/Cesium.js')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
         script(src='/scripts/development/main.js')
