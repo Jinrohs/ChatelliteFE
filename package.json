@@ -21,9 +21,11 @@
     "gulp": "git://github.com/gulpjs/gulp.git#4.0",
     "gulp-develop-server": "^0.5.1",
     "gulp-plumber": "^1.1.0",
+    "mocha": "*",
     "morgan": "^1.7.0",
     "opn": "^4.0.1",
     "pug": "^2.0.0-alpha3",
+    "rewire": "*",
     "vinyl-named": "^1.1.0",
     "webpack": "^1.13.0",
     "webpack-stream": "^3.1.0"

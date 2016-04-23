@@ -5,6 +5,7 @@
 var fs = require('fs');
 var http = require('http');
 var configure = require('../configure');
+var profile = require('../resouces/profile');
 
 /**
  * 初回のCZMLをレスポンスします。
@@ -15,6 +16,31 @@ var renderDefault = function(req, res) {
     });
 };
 
+var renderNextCzml = function(req, res) {
+    var option = req.params.option;
+    if(option == undefined) {
+        res.status(404);
+        res.end("Specify starttime-endtime");
+    }
+    
+    var time = parseRequestedTime(option);
+    loadOrbit(time.startTime, end.endTime, function(data) {
+        res.json(createCzml(data));
+    });
+};
+
+var createCzml = function(data) {
+    
+};
+
+var parseRequestedTime = function(option) {
+    var val = option.split("-");
+    return {
+        "startTime": new Date(Number(val[0]) * 1000),
+        "endTime": new Date(Number(val[1]) * 1000)
+    };    
+}
+
 /**
  * APIから軌道などを取得します。 
  * @param startTime 取得開始日時
@@ -22,10 +48,17 @@ var renderDefault = function(req, res) {
  * @param callback コールバック関数
  */
 var loadOrbit = function(startTime, endTime, callback) {
+    var url = getOrbitApiUrl(startTime, endTime);
+    http.get(url, callback(res)).on('error', function(err) {
+        console.log(err);
+    });
 };
 
-var getOrbitApiUrl = function() {
-    
+var getOrbitApiUrl = function(startTime, endTime) {
+    var url = "http://" + onfigure.orbitApi + ":" + configure.orbitApiPort;
+    var sTime = (typeof startTime == "number" ? startTime : startTime.getTime() / 1000);
+    var eTime = (typeof endTime == "number" ? endTime : endTime.getTime() / 1000);
+    return url + "/?startTime=" + sTime + "&endTime=" + eTime + "&interval=" + configure.orbitIntervalSec; 
 };
 
 module.exports = {
@@ -35,9 +68,16 @@ module.exports = {
         console.log("command:" + command);
         console.log("option:" + option);
         
-        if(command === 'default') {
-            renderDefault(req, res);
+        switch(command) {
+            case 'default':
+                renderDefault(req, res);
+                break;
+            case 'positions':
+                renderNextCzml(req, res);
         }
+            
+            
+        
         
         
     }
