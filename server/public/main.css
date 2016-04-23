@@ -70,21 +70,24 @@ p, h1, h2, h3, h4, h5 {
     top: 40px;
     background-color: rgba(59, 75, 82, 0.6);
     width: 100%;
-    height: 70px;
+    height: 78px;
     margin-bottom: 8px;
     color: rgba(159, 175, 182, 1);
     font-size: 12px;
     display: flex;
     border-radius: 2px;
     transition: top 0.6s ease;
+    overflow: hidden;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
 }
 
 #comments .comment .comment-image-container {
-    padding: 15px;
+    padding: 10px 8px;
 }
 
 #comments .comment .comment-image-container .comment-icon {
-    width: 40px;
+    width: 50px;
 }
 
 #comments .comment .comment-detail-container {
@@ -98,6 +101,11 @@ p, h1, h2, h3, h4, h5 {
     font-size: 10px;
     margin: 0;
     color: rgba(189, 205, 212, 1);
+}
+
+#comments .comment .comment-message {
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
 }
 
 /*
@@ -121,6 +129,8 @@ p, h1, h2, h3, h4, h5 {
     width: 100%;
     height: 100%;
     padding: 25px;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 #popup-header {
@@ -168,7 +178,6 @@ p, h1, h2, h3, h4, h5 {
 
 #popup-content .popup-image {
     width: 100%;
-    max-width: 800px;
     height: auto;
     padding: 20px;
     border: 0;
@@ -206,8 +215,71 @@ p, h1, h2, h3, h4, h5 {
 
 #splash .logo {
     opacity: 0;
-    width: 75%;
+    width: 45%;
+    max-width: 400px;
     height: auto;
     margin-top: 260px;
     margin-left: -15px;
+}
+
+/*
+  APP LOGO
+*/
+#app-logo {
+    position: absolute;
+    left: 8px;
+    top: 15px;
+}
+
+#app-logo img {
+    width: 140px;
+}
+
+/*
+  OVERRIDE
+*/
+.cesium-timeline-bar {
+    background: none !important;
+}
+
+.cesium-timeline-main {
+    border: none !important;
+    font-size: 9px !important;
+    color: #555 !important;
+}
+
+.cesium-timeline-needle {
+    background: none !important;
+}
+
+.cesium-button {
+    border: none !important;
+    background: none !important;
+    border-radius: 0;
+    width: 35px !important;
+    height: 35px !important;
+    box-shadow: none !important;
+    margin: 0 10px 0 0 !important;
+    padding: 0 !important;
+}
+
+.cesium-toolbar {
+}
+.cesium-toolbar-button {
+    margin-right:  10px !important;
+    z-index: 9999 !important;
+}
+
+.cesium-home-button {
+    background: url('/images/icon-back.png') no-repeat !important;
+    background-size: 100% !important;
+    /*background-size: 10px;*/
+    margin-top: 4px !important;
+}
+.cesium-home-button svg {
+    display: none;
+}
+
+.cesium-button svg path {
+    fill: #fff;
 }

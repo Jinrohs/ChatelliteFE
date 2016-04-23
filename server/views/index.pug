@@ -21,7 +21,7 @@ mixin comments
 
 mixin splash
     #splash
-        img.logo(src='/images/logo.png')
+        img.logo(src='/images/logo-fix.png')
 
 mixin popup
     #popup.hide
@@ -66,6 +66,8 @@ html(lang='ja')
         +comments
         +popup
         +splash
+        #app-logo
+            img(src='/images/logo-app.png')
 
     block script
         script(src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js')

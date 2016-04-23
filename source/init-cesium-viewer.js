@@ -7,7 +7,7 @@ module.exports = function () {
         infoBox: false,
         // homeButton: false,
         geocoder: false,
-        //animation: false,
+        animation: false,
         navigationInstructionsInitiallyVisible: false,
         baseLayerPicker : false
     });

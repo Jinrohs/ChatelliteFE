@@ -2,9 +2,29 @@ var satelliteData = require('./satellite-data');
 
 module.exports = function initPopup(viewer) {
     var $popup = $('#popup');
+    var $popupInner = $popup.find('#popup-inner');
 
     $popup.on('click', function () {
-        $popup.addClass('hide');
+        // $popup.addClass('hide');
+
+        // $popup.find('#popup-inner')
+        //     .css({
+        //         opacity: 0
+        //     });
+
+        $popupInner
+            .animate({
+                marginTop: 15,
+                opacity: 0
+            }, 400, function () {
+                $popupInner
+                    .css({
+                        marginTop: 0,
+                        opacity: 1
+                    });
+                    
+                $popup.addClass('hide');
+            });
     });
 
     // 衛星のクリックイベント
@@ -28,7 +48,7 @@ module.exports = function initPopup(viewer) {
                 $popup.find('.popup-image').attr('src', data.imageSrc);
             }
 
-            $popup.find('#popup-inner')
+            $popupInner
                 .css({
                     marginTop: 15,
                     opacity: 0
@@ -37,12 +57,11 @@ module.exports = function initPopup(viewer) {
             $popup
                 .removeClass('hide');
 
-            $popup.find('#popup-inner')
+            $popupInner
                 .animate({
                     marginTop: 0,
                     opacity: 1
                 }, 400);
-
         }
     }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
 };

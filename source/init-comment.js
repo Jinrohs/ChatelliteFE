@@ -16,8 +16,6 @@ function sortComments() {
 }
 
 function addComment(name, comment) {
-    commentCount++;
-
     var $comment = $commentTemplate.clone();
     $comment
         .css({
@@ -25,7 +23,7 @@ function addComment(name, comment) {
         })
         .appendTo('#comments-content')
         .removeClass('hide')
-        .addClass(comment.id)
+        .addClass('' + comment.id)
         .animate({
             top: commentCount * (commentHeight + commentMarginBottom)
         }, 200);
@@ -39,14 +37,16 @@ function addComment(name, comment) {
     $comment.find('.comment-icon')
         .attr('src', satelliteData[name].chatIconSrc);
 
+    commentCount++;
     sortComments();
 
     // 削除イベントをバインド
     setTimeout(function () {
-        $('#comments-content .comment.' + comment.id).remove();
+        console.log(comment);
         commentCount--;
+        $('#comments-content .comment.' + comment.id).remove();
         sortComments();
-    }, 5000);
+    }, 10000);
 }
 
 var autoAdd = function (name) {
@@ -74,7 +74,7 @@ var autoAdd = function (name) {
             .always(function () {
                 autoAdd(name);
             });
-    }, _.random(3, 10) * 1000);
+    }, _.random(3, 15) * 1000);
 };
 
 module.exports = function (viewer) {
