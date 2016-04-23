@@ -1,0 +1,16 @@
+html, body, #cesiumContainer {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.cesium-viewer {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.cesium-viewer .cesium-widget-credits {
+    display: none;
+}
