@@ -9,8 +9,7 @@ var previousStopTime;
 var onTickListener = function(clock) {
     if(isNextLoad(clock)) {
         loadNextOrbit(clock);
-    }
-    console.log(Math.round(Cesium.JulianDate.toDate(clock.currentTime).getTime() / 1000));
+    }    
 };
 
 var isNextLoad = function(clock) {
