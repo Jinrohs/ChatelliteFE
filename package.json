@@ -9,6 +9,7 @@
     "build": "gulp"
   },
   "dependencies": {
+    "superagent": "^1.8.3"
   },
   "devDependencies": {
     "body-parser": "^1.15.0",
@@ -30,8 +31,7 @@
     "webpack": "^1.13.0",
     "webpack-stream": "^3.1.0"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "license": "MIT",
   "engines": {
     "node": ">=5.0"

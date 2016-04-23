@@ -1,6 +1,7 @@
 'use strict';
 var assert = require('assert');
 var rewire = require('rewire');
+var configure = require('../configure');
 var CzmlController = rewire('./CzmlController');
 
 describe('CzmlController', function() {
@@ -15,6 +16,31 @@ describe('CzmlController', function() {
         })
     });
     
+    describe('getOrbitApiUrl', function() {
+        it('URL取得', function() {
+            var getOrbitApiUrl = CzmlController.__get__('getOrbitApiUrl');
+            var startTime = new Date(2015, 1, 10, 11, 10, 0);
+            var endTime = new Date(2015, 1, 10, 12, 10, 0);           
+            var actual = getOrbitApiUrl(startTime, endTime);
+            var expect = "http://" + configure.orbitApi + ":"
+                 + configure.orbitApiPort + "/xyz" +
+                 "?start=1423534200&end=1423537800";
+            assert.equal(actual, expect);
+        });
+    });
+    
+    describe('convertCatesianPosition', function() {
+       it('positionの変換', function() {
+           var convertCatesianPosition = CzmlController.__get__('convertCatesianPosition');
+           var data = [
+               [0, 1, 2, 3], [10, 1, 2, 3], [20, 1, 2, 3]
+           ] 
+           var actual = convertCatesianPosition(data);
+           var expect = [0, 1, 2, 3, 10, 1, 2, 3, 20, 1, 2, 3];
+           assert.deepEqual(actual, expect);
+       }); 
+    });
+    /*
     describe('createCzml', function() {
         it('', function() {
             var createCzml = CzmlController.__get__('createCzml');
@@ -41,5 +67,5 @@ describe('CzmlController', function() {
             var actual = createCzml(cartesians, startTime, endTime);
             console.log(actual);            
         });
-    });
+    });*/
 });
