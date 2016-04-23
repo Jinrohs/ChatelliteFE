@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 // Cesiumのセットアップ
 function cesiumViewer() {
-    var viewer = new Cesium.Viewer('cesiumContainer', {
+    var viewer = new Cesium.Viewer('cesium-container', {
         // timeline: false,
         navigationHelpButton: false,
         infoBox: false,

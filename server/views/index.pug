@@ -1,5 +1,53 @@
 doctype html
 
+mixin cesium
+    section#cesium-container
+
+
+mixin comment
+    .comment
+        .comment-image
+            img
+        .comment-text
+            p こんにちはこんにちはこんにちはこんにちはこんにちは
+
+mixin comments
+    section#comments
+        header
+        #comments-content
+            +comment
+            +comment
+            +comment
+            +comment
+
+
+mixin splash
+    #splash
+        img.logo(src='/images/logo.png')
+
+mixin popup
+    #popup.hide
+        #popup-inner
+            header#popup-header
+                h1#popup-title ひので
+                span#popup-title-sub
+                    span NORAD ID:
+                    span.norad-id aaaa
+            section#popup-content
+                section.popup-component
+                    section
+                        img.popup-image
+                section.popup-component
+                    section
+                        h3 国籍
+                        p.coutry aaa
+                    section
+                        h3 誕生日
+                        p.birthday 2016/04/23
+                    section
+                        h3 体重
+                        p.weight 900Kg
+
 html(lang='ja')
     head
         block meta
@@ -12,33 +60,10 @@ html(lang='ja')
             link(rel='stylesheet', href='http://cesiumjs.org/Cesium/Build/Cesium/Widgets/widgets.css')
             link(rel='stylesheet', href='/main.css')
     body
-        #cesiumContainer
-
-        #splash
-            img.logo(src='/images/logo.png')
-
-        #popup.hide
-            #popup-container
-                header#popup-header
-                    h1#popup-title ひので
-                    span#popup-title-sub
-                        span NORAD ID:
-                        span.norad-id aaaa
-                section#popup-content
-                    section.popup-component
-                        section
-                            img.popup-image
-                    section.popup-component
-                        section
-                            h3 国籍
-                            p.coutry aaa
-                        section
-                            h3 誕生日
-                            p.birthday 2016/04/23
-                        section
-                            h3 体重
-                            p.weight 900Kg
-
+        +cesium
+        +comments
+        +popup
+        +splash
 
     block script
         script(src='https://cesiumjs.org/Cesium/Build/Cesium/Cesium.js')
