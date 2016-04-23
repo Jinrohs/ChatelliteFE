@@ -25,6 +25,9 @@ router.get('/', (req, res) => {
     res.render('index', {});
 });
 
+router.get('/api/czml/:command/:option?', (req, res) => {
+});
+
 if (process.env === 'development') {
     app.use(errorhandler());
 }
