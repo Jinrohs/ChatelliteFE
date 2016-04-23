@@ -11,20 +11,11 @@
             "step": "SYSTEM_CLOCK_MULTIPLIER"
         }
     },
-<<<<<<< HEAD
-    {
-        "id": "object",
-        "name": "accesses",
-        "description": "list of accesses"
-    },
-    {
-=======
     {    
->>>>>>> a4cf87f... czml2
         "id": "satellite/hinode/default",
         "name": "Inode",
-        "availability": ["2012-03-15T10:00:00Z/2012-03-16T10:00:00Z"],
         "description": "<h2>ひので</h2>",
+        "availability": ["2012-03-15T10:00:00Z/2012-03-16T10:00:00Z"],        
         "billboard": {
             "image": "/images/hatsunemiku.jpg",
             "scale": 1.0,
@@ -36,6 +27,34 @@
             "fillColor": {"rgba": [ 0, 0, 30, 40 ]},
             "outlineWidth": 2,
             "show": true
+        }
+    },
+    {    
+        "id": "satellite/hinode/1",
+        "name": "Inode",
+        "availability": ["2012-03-15T10:00:00Z/2012-03-16T10:00:00Z"],
+        "parent": "satellite/hinode/default",
+        "billboard": {
+            "image": "/images/hatsunemiku.jpg",
+            "scale": 1.0,
+            "show": true
+        },
+        "label": {
+            "text": "ひので",
+            "font":"11pt Lucida Console",
+            "fillColor": {"rgba": [ 0, 0, 30, 40 ]},
+            "outlineWidth": 2,
+            "show": true
+        },
+        "path": {
+            "show": true,
+            "width": 1,
+            "material": {
+                "solidColor":{
+                    "color": {"rgba":[ 0,255,0,255 ] }
+                }
+            },
+            "resolution": 120
         },
         "position": {
             "interpolationAlgorithm":"LAGRANGE",
