@@ -6,6 +6,15 @@ var comments = [];
 var $commentTemplate = $('.comment');
 var commentHeight = $commentTemplate.height();
 
+function sortComments() {
+    $('#comments-content .comment').each(function (index) {
+        $(this)
+            .css({
+                top: index * (commentHeight + 8)
+            });
+    });
+}
+
 function removeFirstComment() {
     if (!comments.length) {
         return;
@@ -14,12 +23,8 @@ function removeFirstComment() {
     comments.pop();
 
     $('#comments-content .comment:first-child').remove();
-    $('#comments-content .comment').each(function (index) {
-        $(this)
-            .css({
-                top: index * (commentHeight + 8)
-            });
-    });
+
+    sortComments();
 }
 
 function addComment(name, comment) {
@@ -46,6 +51,8 @@ function addComment(name, comment) {
         .attr('src', satelliteData[name].iconSrc);
 
     comments.push(comment);
+
+    sortComments();
 }
 
 var autoAdd = function (name) {
