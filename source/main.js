@@ -7,7 +7,7 @@ $(document).ready(function() {
         infoBox: false,
         // homeButton: false,
         geocoder: false,
-        animation: false,
+        //animation: false,
         navigationInstructionsInitiallyVisible: false,
 
         imageryProvider : new Cesium.ArcGisMapServerImageryProvider({
@@ -27,6 +27,8 @@ $(document).ready(function() {
     // データ追加
     var data = Cesium.CzmlDataSource.load('/api/czml/default');
     viewer.dataSources.add(data);
+    viewer.dataSources.add(Cesium.CzmlDataSource.load('/default2.czml'));
+    viewer.dataSources.add(Cesium.CzmlDataSource.load('/default3.czml'));
 
     // 衛星のクリックイベント
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
