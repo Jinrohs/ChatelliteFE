@@ -4,6 +4,7 @@ $(document).ready(function() {
     cesiumViewer();
     popup();
     splash();
+    comment();
 });
 
 // Cesiumのセットアップ
@@ -29,7 +30,7 @@ function cesiumViewer() {
 
     // データ追加
     var data = Cesium.CzmlDataSource.load('/api/czml/get/1396324800-1396325700');
-    viewer.dataSources.add(data);    
+    viewer.dataSources.add(data);
 
     // 衛星のクリックイベント
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
@@ -58,7 +59,7 @@ function splash() {
     var $logo = $('#splash .logo');
     var logoPositionYCenter = $(window).height() / 2 - $logo.height() / 2;
 
-    $logo
+    return $logo
         .css({
             marginTop: logoPositionYCenter + 50
         })
@@ -72,4 +73,59 @@ function splash() {
                 });
             }, 1000);
         });
+}
+
+function comment() {
+    var comments = [];
+    var $commentTemplate = $('.comment');
+
+    // $comment.removeClass('hide');
+    var commentHeight = $commentTemplate.height();
+
+    _.times(4, function (index) {
+        addComment(0, index);
+    });
+
+    function removeFirstComment() {
+        $('#comments-content .comment:first-child').remove();
+
+        $('#comments-content .comment').each(function (index) {
+            $(this)
+            .css({
+                top: index * (commentHeight + 10)
+            });
+        });
+
+        comments.pop();
+    }
+
+    function addComment(comment) {
+        var $comment = $commentTemplate.clone();
+
+        $comment
+            .css({
+                top: comments.length * (commentHeight + 10) + commentHeight / 2
+            })
+            .appendTo('#comments-content')
+            .removeClass('hide')
+            .animate({
+                top: comments.length * (commentHeight + 10)
+            }, 200);
+
+        comments.push(comment);
+    }
+
+    var updateComment = function () {
+        setTimeout(function () {
+            removeFirstComment();
+
+            setTimeout(function () {
+                addComment(0, comments.length);
+            }, 2000);
+        }, 3000);
+    };
+
+    setInterval(function () {
+        updateComment();
+    }, 5000);
 }

@@ -5,7 +5,7 @@ mixin cesium
 
 
 mixin comment
-    .comment
+    .comment.hide
         .comment-image
             img
         .comment-text
@@ -13,13 +13,10 @@ mixin comment
 
 mixin comments
     section#comments
-        header
-        #comments-content
-            +comment
-            +comment
-            +comment
-            +comment
-
+        header#comments-header
+        #comments-inner
+            #comments-content
+        +comment
 
 mixin splash
     #splash
@@ -66,6 +63,7 @@ html(lang='ja')
         +splash
 
     block script
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js')
         script(src='https://cesiumjs.org/Cesium/Build/Cesium/Cesium.js')
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
         script(src='/scripts/development/main.js')
