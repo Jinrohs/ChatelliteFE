@@ -4,7 +4,7 @@
         "version": "1.0",
         "clock": {
             "interval": "2012-03-15T10:15:00Z/2012-03-16T10:30:00Z",
-            "currentTime": "2012-03-15T10:00:00Z",
+            "currentTime": "2012-03-15T10:15:00Z",
             "multiplier": 60,
             "range": "LOOP_STOP",
             "step": "SYSTEM_CLOCK_MULTIPLIER"
@@ -18,15 +18,32 @@
         "description": "<h2>いので</h2>",
         "billboard": {
             "image": "/images/hatsunemiku.jpg",
-            "scale": 1.0,
-            "show": true                          
-        },
-        "label": {
-            "text": "いので",
-            "font":"11pt Lucida Console",
-            "fillColor": {"rgba": [ 0, 0, 0, 255 ]},
-            "outlineWidth": 2,
+            "scale": 0.5,
             "show": true
+        },
+        "label":{
+          "fillColor":{
+            "rgba":[
+              255,255,255,255
+            ]
+          },
+          "font":"11pt Lucida Console",
+          "horizontalOrigin":"LEFT",
+          "outlineColor":{
+            "rgba":[
+              255,255,255,255
+            ]
+          },
+          "outlineWidth":2,
+          "pixelOffset":{
+            "cartesian2":[
+              20,0
+            ]
+          },
+          "show":true,
+          "style":"FILL_AND_OUTLINE",
+          "text":"ちょーうける！",
+          "verticalOrigin":"CENTER"
         },
         "path": {
             "show": true,
@@ -48,6 +65,6 @@
         300,6046743.71636896,-3253730.76621873,1601308.71661883,
         6000,6028480.33195964,-3610312.82817681,-617627.593798261
                     ]
-        }        
+        }
     }
 ]

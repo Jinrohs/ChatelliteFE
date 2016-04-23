@@ -14,9 +14,30 @@ html(lang='ja')
     body
         #cesiumContainer
 
+        #splash
+            img.logo(src='/images/logo.png')
+
         #popup.hide
             #popup-container
-                h2 ああああ
+                header#popup-header
+                    h1#popup-title ひので
+                    span#popup-title-sub
+                        span NORAD ID:
+                        span.norad-id aaaa
+                section#popup-content
+                    section.popup-component
+                        section
+                            img.popup-image
+                    section.popup-component
+                        section
+                            h3 国籍
+                            p.coutry aaa
+                        section
+                            h3 誕生日
+                            p.birthday 2016/04/23
+                        section
+                            h3 体重
+                            p.weight 900Kg
 
 
     block script

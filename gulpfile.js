@@ -24,6 +24,9 @@ const paths = {
         './server/views/*.pug',
         './server/controllers/*.js'
     ],
+    resources: [
+        './server/public/*.css'
+    ],
 };
 
 const uglifyConfig = {
@@ -95,6 +98,12 @@ function scripts() {
 function watch() {
     gulp.watch(paths.scripts, scripts);
     gulp.watch(paths.serverFiles, serverRestart);
+    gulp.watch(paths.resources, reload);
+}
+
+function reload() {
+    return gulp.src(paths.resources)
+        .pipe(bs.stream());
 }
 
 gulp.task('production', gulp.series(

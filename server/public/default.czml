@@ -11,40 +11,38 @@
             "step": "SYSTEM_CLOCK_MULTIPLIER"
         }
     },
-    {    
-        "id": "satellite/hinode/default",
-        "name": "Inode",
-        "description": "<h2>ひので</h2>",
-        "availability": ["2012-03-15T10:00:00Z/2012-03-16T10:00:00Z"],        
-        "billboard": {
-            "image": "/images/hatsunemiku.jpg",
-            "scale": 1.0,
-            "show": true
-        },
-        "label": {
-            "text": "ひので",
-            "font":"11pt Lucida Console",
-            "fillColor": {"rgba": [ 0, 0, 30, 40 ]},
-            "outlineWidth": 2,
-            "show": true
-        }
-    },
-    {    
+    {
         "id": "satellite/hinode/1",
         "name": "Inode",
-        "availability": ["2012-03-15T10:00:00Z/2012-03-16T10:00:00Z"],
-        "parent": "satellite/hinode/default",
+        "availability": ["2012-03-15T10:00:00Z/2012-03-16T10:05:00Z"],
         "billboard": {
             "image": "/images/hatsunemiku.jpg",
-            "scale": 1.0,
+            "scale": 0.5,
             "show": true
         },
-        "label": {
-            "text": "ひので",
-            "font":"11pt Lucida Console",
-            "fillColor": {"rgba": [ 0, 0, 30, 40 ]},
-            "outlineWidth": 2,
-            "show": true
+        "label":{
+          "fillColor":{
+            "rgba":[
+              255,255,255,255
+            ]
+          },
+          "font":"11pt Lucida Console",
+          "horizontalOrigin":"LEFT",
+          "outlineColor":{
+            "rgba":[
+              255,255,255,255
+            ]
+          },
+          "outlineWidth":2,
+          "pixelOffset":{
+            "cartesian2":[
+              20,0
+            ]
+          },
+          "show":true,
+          "style":"FILL_AND_OUTLINE",
+          "text":"ちょーうける！",
+          "verticalOrigin":"CENTER"
         },
         "path": {
             "show": true,
@@ -63,8 +61,8 @@
             "epoch":"2012-03-15T10:00:00Z",
             "cartesian": [
                 0,4650397.56551457,-3390535.52275848,-4087729.48877329,
-                300,3169722.12564676,-2787480.80604407,-5661647.74541255                    
+                300,3169722.12564676,-2787480.80604407,-5661647.74541255
             ]
-        }        
+        }
     }
 ]
