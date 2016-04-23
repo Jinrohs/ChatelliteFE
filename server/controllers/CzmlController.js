@@ -14,9 +14,16 @@ var superagent = require('superagent');
  * 初回のCZMLをレスポンスします。
  */
 var renderDefault = function(req, res) {
-    fs.readFile(`${__dirname}/../public/default.czml`, 'UTF-8', function(err, data) {
-        res.json(JSON.parse(data));
-    });
+    res.json(createDefaultCzml());
+};
+
+var createDefaultCzml = function() {
+    var czml = [];
+    czml.push(profile.document());
+    czml.push(profile.ibukiDefault());
+    czml.push(profile.hinodeDefault());
+    czml.push(profile.landsat8Default());
+    return czml;    
 };
 
 var renderNextCzml = function(req, res) {
@@ -51,7 +58,6 @@ var createCzml = function(data, startTime, endTime) {
     czml.push(ibukiPacket);
     czml.push(hinodePacket);
     czml.push(landsat8Packet);
-    console.log(ibukiPacket.position.cartesian);
     return czml;
 };
 
