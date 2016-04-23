@@ -23,6 +23,6 @@ $(document).ready(function() {
     // var blackMarble = layers.add(blackmarbleImageryProvider);
     // console.log(Cesium);
 
-    var data = Cesium.CzmlDataSource.load('/api/czml/defualt');
+    var data = Cesium.CzmlDataSource.load('/api/czml/default');
     viewer.dataSources.add(data);
 });
