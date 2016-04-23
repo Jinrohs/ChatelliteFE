@@ -5,7 +5,7 @@ var createLabel = function(name, message) {
     if(message != undefined) {
         content += " 「" + message + "」";
     }
-    
+
     return {
         "text": content,
         "fillColor":{
@@ -29,7 +29,7 @@ var createLabel = function(name, message) {
         show: true,
         style: "FILL_AND_OUTLINE",
         verticalOrigin: "CENTER"
-    };         
+    };
 };
 
 module.exports = {
@@ -47,8 +47,8 @@ module.exports = {
             }
         };
     },
-    
-    hinode: function(index, startTime, endTime, message) {        
+
+    hinode: function(index, startTime, endTime, message) {
         return {
             id: "satellite/hinode/" + index,
             name: "hinode",
@@ -64,14 +64,14 @@ module.exports = {
                 width: 1,
                 material: {
                     solidColor:{
-                        color: {rgba:[ 0,255,0,255 ] }
+                        color: {rgba:[ 255, 150, 255, 255 ] }
                     }
                 },
                 resolution: 120
             }
         };
     },
-    
+
     ibuki: function(index, startTime, endTime, message) {
         return {
             id: "satellite/ibuki/" + index,
@@ -88,14 +88,14 @@ module.exports = {
                 width: 1,
                 material: {
                     solidColor:{
-                        color: {rgba:[ 0,255,0,255 ] }
+                        color: {rgba:[ 150, 255, 255, 255 ] }
                     }
                 },
                 resolution: 120
             }
         };
     },
-    
+
     landsat8: function(index, startTime, endTime, message) {
         return {
             id: "satellite/landsat8/" + index,
@@ -112,7 +112,7 @@ module.exports = {
                 width: 1,
                 material: {
                     solidColor:{
-                        color: {rgba:[ 0,255,0,255 ] }
+                        color: {rgba:[ 255, 255, 150, 255 ] }
                     }
                 },
                 resolution: 120
