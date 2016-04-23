@@ -6,10 +6,11 @@ mixin cesium
 
 mixin comment
     .comment.hide
-        .comment-image
-            img
-        .comment-text
-            p こんにちはこんにちはこんにちはこんにちはこんにちは
+        .comment-image-container
+            img.comment-icon
+        .comment-detail-container
+            p.comment-title
+            p.comment-message
 
 mixin comments
     section#comments
@@ -29,7 +30,7 @@ mixin popup
                 h1#popup-title ひので
                 span#popup-title-sub
                     span NORAD ID:
-                    span.norad-id aaaa
+                    span.norad-id  aaaa
             section#popup-content
                 section.popup-component
                     section
@@ -37,13 +38,16 @@ mixin popup
                 section.popup-component
                     section
                         h3 国籍
-                        p.coutry aaa
+                        p.country aaa
                     section
                         h3 誕生日
                         p.birthday 2016/04/23
                     section
                         h3 体重
                         p.weight 900Kg
+                    section
+                        h3 メッセージ
+                        p.message テスト
 
 html(lang='ja')
     head

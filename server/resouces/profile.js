@@ -23,7 +23,7 @@ var createLabel = function(name, message) {
         "outlineWidth":2,
         "pixelOffset":{
             "cartesian2":[
-                20,0
+                40, 10
             ]
         },
         show: true,
@@ -54,7 +54,7 @@ module.exports = {
             name: "hinode",
             availability: [utility.getIntervalStr(startTime, endTime)],
             billboard: {
-                image: "/images/hatsunemiku.png",
+                image: "/images/hinode-icon.png",
                 scale: 1.0,
                 show: true
             },
@@ -75,10 +75,10 @@ module.exports = {
     ibuki: function(index, startTime, endTime, message) {
         return {
             id: "satellite/ibuki/" + index,
-            name: "hinode",
+            name: "ibuki",
             availability: [utility.getIntervalStr(startTime, endTime)],
             billboard: {
-                image: "/images/hatsunemiku.png",
+                image: "/images/ibuki-icon.png",
                 scale: 1.0,
                 show: true
             },
@@ -99,10 +99,10 @@ module.exports = {
     landsat8: function(index, startTime, endTime, message) {
         return {
             id: "satellite/landsat8/" + index,
-            name: "hinode",
+            name: "landsat8",
             availability: [utility.getIntervalStr(startTime, endTime)],
             billboard: {
-                image: "/images/hatsunemiku.png",
+                image: "/images/landsat8-icon.png",
                 scale: 1.0,
                 show: true
             },

@@ -6,8 +6,10 @@ var initSplash = require('./init-splash');
 var initComment = require('./init-comment');
 
 $(document).ready(function() {
-    initCesiumViewer();
-    initPopup();
-    initSplash(initComment);
-    // initComment();
+    var viewer = initCesiumViewer();
+
+    initSplash(function () {
+        initPopup(viewer);
+        initComment(viewer);
+    });
 });
