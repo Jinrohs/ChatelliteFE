@@ -58,7 +58,17 @@ module.exports = {
                 scale: 1.0,
                 show: true
             },
-            label: createLabel("ひので", message)
+            label: createLabel("ひので", message),
+            path: {
+                show: true,
+                width: 1,
+                material: {
+                    solidColor:{
+                        color: {rgba:[ 0,255,0,255 ] }
+                    }
+                },
+                resolution: 120
+            }
         };
     },
     
@@ -72,7 +82,17 @@ module.exports = {
                 scale: 1.0,
                 show: true
             },
-            label: createLabel("いぶき", message)
+            label: createLabel("いぶき", message),
+            path: {
+                show: true,
+                width: 1,
+                material: {
+                    solidColor:{
+                        color: {rgba:[ 0,255,0,255 ] }
+                    }
+                },
+                resolution: 120
+            }
         };
     },
     
@@ -86,7 +106,17 @@ module.exports = {
                 scale: 1.0,
                 show: true
             },
-            label: createLabel("LandSat8", message)
+            label: createLabel("LandSat8", message),
+            path: {
+                show: true,
+                width: 1,
+                material: {
+                    solidColor:{
+                        color: {rgba:[ 0,255,0,255 ] }
+                    }
+                },
+                resolution: 120
+            }
         };
     }
 };
