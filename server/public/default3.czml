@@ -14,7 +14,6 @@
         "id": "satellite/hinode/3",
         "name": "Inode",
         "availability": ["2012-03-15T10:15:00Z/2012-03-15T10:30:00Z"],
-        "parent": "satellite/hinode/default",
         "description": "<h2>いので</h2>",
         "billboard": {
             "image": "/images/hatsunemiku.jpg",

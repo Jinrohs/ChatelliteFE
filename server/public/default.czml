@@ -11,11 +11,14 @@
             "step": "SYSTEM_CLOCK_MULTIPLIER"
         }
     },
-
+    {
+        "id": "satellite/hinode/default"
+    },
     {
         "id": "satellite/hinode/1",
-        "name": "Inode",
+        "name": "Hinode",
         "availability": ["2012-03-15T10:00:00Z/2012-03-16T10:05:00Z"],
+        "parent": "satellite/hinode/default",
         "billboard": {
             "image": "/images/hatsunemiku.jpg",
             "scale": 0.5,
@@ -42,7 +45,7 @@
           },
           "show":true,
           "style":"FILL_AND_OUTLINE",
-          "text":"ちょーうける！",
+          "text":"ちょーうける！んんんん",
           "verticalOrigin":"CENTER"
         },
         "path": {
