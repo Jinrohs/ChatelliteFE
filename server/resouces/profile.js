@@ -1,21 +1,4 @@
-var getIntervalStr = function(startTime, endTime) {
-    var startTimeStr = toTimeStringFormat(startTime);
-    var endTimeStr = toTimeStringFormat(endTime);
-    return startTimeStr + "/" + endTimeStr;
-}
-
-var toTimeStringFormat = function(dateobj) {
-    return (dateobj.getYear() + 1900) + "-" + 
-        toDoubleDegitsStr(dateobj.getMonth() + 1) + "-" + 
-        toDoubleDegitsStr(dateobj.getDate()) + "T" +
-        toDoubleDegitsStr(dateobj.getHours()) + ":" +
-        toDoubleDegitsStr(dateobj.getMinutes()) + ":" +
-        toDoubleDegitsStr(dateobj.getSeconds()) + "Z";
-};
-
-var toDoubleDegitsStr = function(val) {
-    return val >= 10 ? String(val) : '0' + String(val);
-}
+var utility = require('../utility');
 
 var createLabel = function(name, message) {
     var content = name
@@ -56,8 +39,8 @@ module.exports = {
             name: "satecolle",
             version: "1.0",
             clock :{
-                interval: getIntervalStr(startTime, endTime),
-                currentTime: startTimeStr,
+                interval: utility.getIntervalStr(startTime, endTime),
+                currentTime: utility.toTimeStringFormat(startTime),
                 multiplier: 60,
                 range: "LOOP_STOP",
                 step: "SYSTEM_CLOCK_MULTIPLIER"
@@ -69,9 +52,9 @@ module.exports = {
         return {
             id: "satellite/hinode/" + index,
             name: "hinode",
-            availability: [getIntervalStr(startTime, endTime)],
+            availability: [utility.getIntervalStr(startTime, endTime)],
             billboard: {
-                image: "/images/hatsunemiku.jpg",
+                image: "/images/hatsunemiku.png",
                 scale: 1.0,
                 show: true
             },
@@ -83,9 +66,9 @@ module.exports = {
         return {
             id: "satellite/ibuki/" + index,
             name: "hinode",
-            availability: [getIntervalStr(startTime, endTime)],
+            availability: [utility.getIntervalStr(startTime, endTime)],
             billboard: {
-                image: "/images/hatsunemiku.jpg",
+                image: "/images/hatsunemiku.png",
                 scale: 1.0,
                 show: true
             },
@@ -97,9 +80,9 @@ module.exports = {
         return {
             id: "satellite/landsat8/" + index,
             name: "hinode",
-            availability: [getIntervalStr(startTime, endTime)],
+            availability: [utility.getIntervalStr(startTime, endTime)],
             billboard: {
-                image: "/images/hatsunemiku.jpg",
+                image: "/images/hatsunemiku.png",
                 scale: 1.0,
                 show: true
             },

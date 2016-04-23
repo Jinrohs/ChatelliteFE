@@ -11,6 +11,7 @@
             "step": "SYSTEM_CLOCK_MULTIPLIER"
         }
     },
+
     {
         "id": "satellite/hinode/1",
         "name": "Inode",

@@ -6,6 +6,8 @@ var fs = require('fs');
 var http = require('http');
 var configure = require('../configure');
 var profile = require('../resouces/profile');
+var utility = require('../utility');
+var dummy = require('../resouces/dummy');
 
 /**
  * 初回のCZMLをレスポンスします。
@@ -24,14 +26,80 @@ var renderNextCzml = function(req, res) {
     }
     
     var time = parseRequestedTime(option);
-    loadOrbit(time.startTime, end.endTime, function(data) {
-        res.json(createCzml(data));
+    loadOrbit(time.startTime, time.endTime, function(data) {
+        var czml = createCzml(data, time.startTime, time.endTime);
+        console.log(czml);
+        res.json(czml);
     });
 };
 
-var createCzml = function(data) {
-    
+var createCzml = function(data, startTime, endTime) {
+    var ibukiPosition = data[nameToCode('ibuki')];
+    var hinodePosition = data[nameToCode('hinode')];
+    var landsat8Position = data[nameToCode('landsat8')];
+        
+    var documentPacket = profile.document(startTime, endTime);
+    var ibukiPacket = createSatellitePacket('ibuki', startTime, endTime, ibukiPosition);
+    var hinodePacket = createSatellitePacket('hinode', startTime, endTime, hinodePosition);
+    var landsat8Packet = createSatellitePacket('landsat8', startTime, endTime, landsat8Position);
+       
+    var czml = [];
+    czml.push(documentPacket);
+    czml.push(ibukiPacket);
+    czml.push(hinodePacket);
+    czml.push(landsat8Packet);          
+    return czml;
 };
+
+var createSatellitePacket = function(name, startTime, endTime, position, message) {
+    var obj = new Object();
+    var index = startTime.getTime() / 1000;
+    switch(name) {
+        case "hinode":
+            obj = profile.hinode(index, startTime, endTime, message);
+            break;
+        case "ibuki":
+            obj = profile.ibuki(index, startTime, endTime, message);
+            break;
+        case "landsat8":
+            obj = profile.landsat8(index, startTime, endTime, message);
+            break;
+    }
+    obj.position = {
+        interpolationAlgorithm: "LAGRANGE",
+        interpolationDegree: 5,
+        referenceFrame: "INERTIAL",
+        epoch: utility.toTimeStringFormat(startTime),
+        cartesian: position
+    };
+    return obj;
+};
+
+var codeToName = function(code) {
+    switch(code) {
+        case 29479:
+            return "hinode";
+        case 33492:
+            return "ibuki";
+        case 39084:
+            return "landsat8";
+        default:
+            return -1;
+    }
+}
+
+var nameToCode = function(name) {
+    switch(name) {
+        case "hinode":
+            return 29479;
+        case "ibuki":
+            return 33492;
+        case "landsat8":
+            return 39084;
+        default:
+            return -1;
+    }
+}
 
 var parseRequestedTime = function(option) {
     var val = option.split("-");
@@ -48,6 +116,12 @@ var parseRequestedTime = function(option) {
  * @param callback コールバック関数
  */
 var loadOrbit = function(startTime, endTime, callback) {
+    // dummy
+    if(true) { 
+        callback(dummy.cartesian1);
+        return;
+    }
+    
     var url = getOrbitApiUrl(startTime, endTime);
     http.get(url, callback(res)).on('error', function(err) {
         console.log(err);
@@ -55,7 +129,7 @@ var loadOrbit = function(startTime, endTime, callback) {
 };
 
 var getOrbitApiUrl = function(startTime, endTime) {
-    var url = "http://" + onfigure.orbitApi + ":" + configure.orbitApiPort;
+    var url = "http://" + configure.orbitApi + ":" + configure.orbitApiPort;
     var sTime = (typeof startTime == "number" ? startTime : startTime.getTime() / 1000);
     var eTime = (typeof endTime == "number" ? endTime : endTime.getTime() / 1000);
     return url + "/?startTime=" + sTime + "&endTime=" + eTime + "&interval=" + configure.orbitIntervalSec; 
@@ -72,13 +146,8 @@ module.exports = {
             case 'default':
                 renderDefault(req, res);
                 break;
-            case 'positions':
+            case 'get':
                 renderNextCzml(req, res);
         }
-            
-            
-        
-        
-        
     }
 }; 

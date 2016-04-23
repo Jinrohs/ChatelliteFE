@@ -14,4 +14,32 @@ describe('CzmlController', function() {
             assert.equal(actual.endTime.getTime(), expect2.getTime());
         })
     });
+    
+    describe('createCzml', function() {
+        it('', function() {
+            var createCzml = CzmlController.__get__('createCzml');
+            var cartesians = {
+                "33492": [
+                    [0, 10, 10, 10],
+                    [100, 20, 20, 20],
+                    [200, 30, 30, 30]
+                ],
+                "29479": [
+                    [0, 100, 10, 100],
+                    [100, 200, 20, 200],
+                    [200, 300, 30, 300]                    
+                ],
+                "39084": [
+                    [0, 100, 10, 100],
+                    [100, 20, 200, 200],
+                    [200, 30, 300, 300]                                        
+                ]
+            };
+            
+            var startTime = new Date(2016, 2, 1, 12, 35, 40);
+            var endTime = new Date(2016, 2, 2, 12, 35, 40);            
+            var actual = createCzml(cartesians, startTime, endTime);
+            console.log(actual);            
+        });
+    });
 });
