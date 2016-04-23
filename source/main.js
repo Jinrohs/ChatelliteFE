@@ -75,57 +75,102 @@ function splash() {
         });
 }
 
+// ふみくんメモ
+// 210.129.18.214:30000/?id=33491&timestamp=10
+//
 function comment() {
     var comments = [];
     var $commentTemplate = $('.comment');
-
-    // $comment.removeClass('hide');
     var commentHeight = $commentTemplate.height();
 
-    _.times(4, function (index) {
-        addComment(0, index);
-    });
+    // _.times(4, function (index) {
+    //     addComment(0, index);
+    // });
 
     function removeFirstComment() {
+        if (!comments.length) {
+            return;
+        }
+
+        comments.pop();
+
         $('#comments-content .comment:first-child').remove();
 
         $('#comments-content .comment').each(function (index) {
             $(this)
-            .css({
-                top: index * (commentHeight + 10)
-            });
+                .css({
+                    top: index * (commentHeight + 10)
+                });
         });
-
-        comments.pop();
     }
 
     function addComment(comment) {
         var $comment = $commentTemplate.clone();
+        var commentConut = comments.length;
 
         $comment
             .css({
-                top: comments.length * (commentHeight + 10) + commentHeight / 2
+                top: commentConut * (commentHeight + 10) + commentHeight / 2
             })
             .appendTo('#comments-content')
             .removeClass('hide')
             .animate({
-                top: comments.length * (commentHeight + 10)
+                top: commentConut * (commentHeight + 10)
             }, 200);
+
+        $comment.find('p')
+            .text(comment);
 
         comments.push(comment);
     }
 
-    var updateComment = function () {
-        setTimeout(function () {
-            removeFirstComment();
+    // var updateComment = function () {
+    //     setTimeout(function () {
+    //         removeFirstComment();
+    //
+    //         // setTimeout(function () {
+    //         //     addComment(0, comments.length);
+    //         // }, 2000);
+    //
+    //         var params = {
+    //             id: 33491,
+    //             timestamp: Date.now()
+    //         };
+    //
+    //         $.get('http://210.129.18.214:30000', params, function (data) {
+    //             addComment(data.result[0].comment, comments.length);
+    //         });
+    //     }, 3000);
+    // };
 
-            setTimeout(function () {
-                addComment(0, comments.length);
-            }, 2000);
-        }, 3000);
+    var autoAdd = function () {
+        setTimeout(function () {
+            if (comments.length > 6) {
+                autoAdd();
+                return;
+            }
+
+            var params = {
+                id: 33491,
+                timestamp: Date.now()
+            };
+            $.get('http://210.129.18.214:30000', params, function (data) {
+                addComment(data.result[0].comment, comments.length);
+                autoAdd();
+            });
+        }, _.random(1, 4) * 1000);
     };
 
-    setInterval(function () {
-        updateComment();
-    }, 5000);
+    autoAdd();
+
+    var autoRemove = function () {
+        setTimeout(function () {
+            if (comments.length > 2) {
+                setTimeout(removeFirstComment, 300);
+            }
+            autoRemove();
+        }, _.random(1, 6) * 1000);
+    };
+
+    autoRemove();
 }
