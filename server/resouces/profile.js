@@ -1,4 +1,5 @@
 var utility = require('../utility');
+var configure = require('../configure');
 
 var createLabel = function(name, message) {
     var content = name
@@ -41,7 +42,7 @@ module.exports = {
             clock :{
                 interval: utility.getIntervalStr(startTime, endTime),
                 currentTime: utility.toTimeStringFormat(startTime),
-                multiplier: 60,
+                multiplier: configure.multiplier,
                 range: "LOOP_STOP",
                 step: "SYSTEM_CLOCK_MULTIPLIER"
             }
