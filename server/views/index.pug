@@ -27,10 +27,11 @@ mixin popup
     #popup.hide
         #popup-inner
             header#popup-header
-                h1#popup-title ひので
+                h1#popup-title
                 span#popup-title-sub
-                    span NORAD ID:
-                    span.norad-id  aaaa
+                    span.norad-id-caption NORAD ID :
+                    span.norad-id
+                img(src='/images/cancel-button.png')
             section#popup-content
                 section.popup-component
                     section
@@ -38,16 +39,16 @@ mixin popup
                 section.popup-component
                     section
                         h3 国籍
-                        p.country aaa
+                        p.country
                     section
                         h3 誕生日
-                        p.birthday 2016/04/23
+                        p.birthday
                     section
                         h3 体重
-                        p.weight 900Kg
+                        p.weight
                     section
                         h3 メッセージ
-                        p.message テスト
+                        p.message
 
 html(lang='ja')
     head

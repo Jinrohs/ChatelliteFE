@@ -1,9 +1,8 @@
 'use strict';
 
 var satelliteData = require('./satellite-data');
-var comments = {};
 var commentCount = 0;
-
+var commentMarginBottom = 8;
 var $commentTemplate = $('.comment');
 var commentHeight = $commentTemplate.height();
 
@@ -16,32 +15,19 @@ function sortComments() {
     });
 }
 
-// function removeFirstComment() {
-//     if (!comments.length) {
-//         return;
-//     }
-//
-//     // comments.pop();
-//     commentCount--;
-//
-//     $('#comments-content .comment:first-child').remove();
-//
-//     sortComments();
-// }
-
 function addComment(name, comment) {
-    var $comment = $commentTemplate.clone();
-    // var commentConut = commentCount;
+    commentCount++;
 
+    var $comment = $commentTemplate.clone();
     $comment
         .css({
-            top: commentConut * (commentHeight + 8) + commentHeight / 2
+            top: commentCount * (commentHeight + commentMarginBottom) + commentHeight / 2
         })
         .appendTo('#comments-content')
         .removeClass('hide')
         .addClass(comment.id)
         .animate({
-            top: commentConut * (commentHeight + 8)
+            top: commentCount * (commentHeight + commentMarginBottom)
         }, 200);
 
     $comment.find('.comment-message')
@@ -53,15 +39,14 @@ function addComment(name, comment) {
     $comment.find('.comment-icon')
         .attr('src', satelliteData[name].chatIconSrc);
 
-    // comments[comment.id](comment);
-    commentCount++;
+    sortComments();
 
+    // 削除イベントをバインド
     setTimeout(function () {
         $('#comments-content .comment.' + comment.id).remove();
-        commentCount++;
-    }, 3000);
-
-    sortComments();
+        commentCount--;
+        sortComments();
+    }, 5000);
 }
 
 var autoAdd = function (name) {
@@ -69,7 +54,7 @@ var autoAdd = function (name) {
         console.log('comment fired');
 
         if (commentCount > 6) {
-            autoAdd();
+            autoAdd(name);
             return;
         }
 
@@ -80,6 +65,7 @@ var autoAdd = function (name) {
 
         $.get('http://210.129.18.214:30000', params)
             .done(function (commentData) {
+                console.log('comment done');
                 addComment(name, commentData.result[0]);
             })
             .fail(function (error) {
@@ -88,22 +74,11 @@ var autoAdd = function (name) {
             .always(function () {
                 autoAdd(name);
             });
-
-    }, _.random(5, 20) * 1000);
-};
-
-var autoRemove = function () {
-    setTimeout(function () {
-        if (commentCount > 2) {
-            setTimeout(removeFirstComment, 300);
-        }
-        autoRemove();
-    }, _.random(1, 6) * 1000);
+    }, _.random(3, 10) * 1000);
 };
 
 module.exports = function (viewer) {
     autoAdd('hinode');
     autoAdd('ibuki');
     autoAdd('landsat8');
-    // autoRemove();
 }

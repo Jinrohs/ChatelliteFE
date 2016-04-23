@@ -124,13 +124,29 @@ p, h1, h2, h3, h4, h5 {
 }
 
 #popup-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     margin-bottom: 25px;
 }
 
 #popup-header #popup-title {
     display: inline-block;
     margin-bottom: 15px;
+}
+
+#popup-header .norad-id-caption {
+    padding-right: .5em;
+}
+
+#popup-header img {
+    width: 30px;
+    opacity: 0.4;
+    float: right;
+    margin-top: 8px;
+    transition: opacity 0.2s ease;
+}
+
+#popup-header img:hover {
+    opacity: 1;
 }
 
 #popup-header #popup-title-sub {
