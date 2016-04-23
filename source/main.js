@@ -1,27 +1,30 @@
 'use strict';
 
 $(document).ready(function() {
-    var blackmarbleImageryProvider = Cesium.createTileMapServiceImageryProvider({
-        url : '//cesiumjs.org/tilesets/imconagery/blackmarble',
-        minimumLevel : 0,
-        maximumLevel : 8
-    });
-
     var viewer = new Cesium.Viewer('cesiumContainer', {
         timeline: false,
         navigationHelpButton: false,
         infoBox: false,
-        homeButton: false,
+        // homeButton: false,
         geocoder: false,
         animation: false,
         navigationInstructionsInitiallyVisible: false,
+
+        imageryProvider : new Cesium.ArcGisMapServerImageryProvider({
+            url : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'
+        }),
+        baseLayerPicker : false
     });
 
-    var layers = viewer.scene.imageryLayers;
+    var layers = viewer.imageryLayers;
 
-    // console.log(layers)
-    // var blackMarble = layers.add(blackmarbleImageryProvider);
-    // console.log(Cesium);
+    var blackMarble = layers.addImageryProvider(Cesium.createTileMapServiceImageryProvider({
+        url: 'https://cesiumjs.org/blackmarble',
+        credit: 'Black Marble imagery courtesy NASA Earth Observatory',
+        flipXY: true
+    }));
+    blackMarble.alpha = 0.9;
+    blackMarble.brightness = 2.0;
 
     var data = Cesium.CzmlDataSource.load('/api/czml/default');
     viewer.dataSources.add(data);
