@@ -8,6 +8,7 @@ var configure = require('../configure');
 var profile = require('../resouces/profile');
 var utility = require('../utility');
 var dummy = require('../resouces/dummy');
+var superagent = require('superagent');
 
 /**
  * 初回のCZMLをレスポンスします。
@@ -28,32 +29,45 @@ var renderNextCzml = function(req, res) {
     var time = parseRequestedTime(option);
     loadOrbit(time.startTime, time.endTime, function(data) {
         var czml = createCzml(data, time.startTime, time.endTime);
-        console.log(czml);
-        res.json(czml);
+        res.json(czml);       
     });
 };
 
 var createCzml = function(data, startTime, endTime) {
-    var ibukiPosition = data[nameToCode('ibuki')];
-    var hinodePosition = data[nameToCode('hinode')];
-    var landsat8Position = data[nameToCode('landsat8')];
-        
+    data = JSON.parse(data);
+    var resultSet = data.ResultSet;
+
+    var ibukiPosition = convertCatesianPosition(resultSet[nameToCode('ibuki')]);
+    var hinodePosition = convertCatesianPosition(resultSet[nameToCode('hinode')]);
+    var landsat8Position = convertCatesianPosition(resultSet[nameToCode('landsat8')]);
+    
     var documentPacket = profile.document(startTime, endTime);
     var ibukiPacket = createSatellitePacket('ibuki', startTime, endTime, ibukiPosition);
     var hinodePacket = createSatellitePacket('hinode', startTime, endTime, hinodePosition);
     var landsat8Packet = createSatellitePacket('landsat8', startTime, endTime, landsat8Position);
-       
+
     var czml = [];
     czml.push(documentPacket);
     czml.push(ibukiPacket);
     czml.push(hinodePacket);
-    czml.push(landsat8Packet);          
+    czml.push(landsat8Packet);
+    console.log(ibukiPacket.position.cartesian);
     return czml;
+};
+
+var convertCatesianPosition = function(position) {
+    var list = [];
+    for(var i = 0; i < position.length; ++i) {
+        for(n = 0; n < position[i].length; ++n) {
+            list.push(position[i][n]);
+        }
+    }
+    return list;
 };
 
 var createSatellitePacket = function(name, startTime, endTime, position, message) {
     var obj = new Object();
-    var index = startTime.getTime() / 1000;
+    var index = Math.round(startTime.getTime() / 1000);
     switch(name) {
         case "hinode":
             obj = profile.hinode(index, startTime, endTime, message);
@@ -117,22 +131,24 @@ var parseRequestedTime = function(option) {
  */
 var loadOrbit = function(startTime, endTime, callback) {
     // dummy
-    if(true) { 
+    /*
+    if(false) { 
         callback(dummy.cartesian1);
         return;
-    }
+    }*/
     
-    var url = getOrbitApiUrl(startTime, endTime);
-    http.get(url, callback(res)).on('error', function(err) {
-        console.log(err);
+    var url = getOrbitApiUrl(startTime, endTime);    
+    superagent.get(url).end(function(err, res){
+        console.log(res.text);
+        callback(res.text);        
     });
 };
 
 var getOrbitApiUrl = function(startTime, endTime) {
     var url = "http://" + configure.orbitApi + ":" + configure.orbitApiPort;
-    var sTime = (typeof startTime == "number" ? startTime : startTime.getTime() / 1000);
-    var eTime = (typeof endTime == "number" ? endTime : endTime.getTime() / 1000);
-    return url + "/?startTime=" + sTime + "&endTime=" + eTime + "&interval=" + configure.orbitIntervalSec; 
+    var sTime = Math.round(startTime.getTime() / 1000);
+    var eTime = Math.round(endTime.getTime() / 1000);
+    return url + "/xyz?start=" + sTime + "&end=" + eTime; 
 };
 
 module.exports = {

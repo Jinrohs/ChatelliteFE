@@ -29,8 +29,11 @@ function cesiumViewer() {
     blackMarble.brightness = 1.0;
 
     // データ追加
-    var data = Cesium.CzmlDataSource.load('/api/czml/get/1396324800-1396325700');
-    viewer.dataSources.add(data);
+    var startTime = Math.round(new Date(2015,10, 1,12,0,0).getTime() / 1000);
+    var endTime = Math.round(new Date(startTime * 1000 + (3600 * 1000)).getTime() / 1000);
+    var api = '/api/czml/get/' + startTime + "-" + endTime;
+    var data = Cesium.CzmlDataSource.load(api);    
+    viewer.dataSources.add(data);    
 
     // 衛星のクリックイベント
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
