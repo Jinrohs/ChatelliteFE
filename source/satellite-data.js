@@ -9,6 +9,7 @@ exports.hinode = {
     message: 'お兄ちゃんは「ようこう」。毎日太陽のこと見つめてます！爆発大好き！宇宙天気予報大好き！',
     imageSrc: '/images/hinode-small.png',
     iconSrc: '/images/hinode-icon.png',
+    chatIconSrc: '/images/hinode-icon-chat.png',
 };
 
 exports.ibuki = {
@@ -18,8 +19,9 @@ exports.ibuki = {
     birthday: '2009/01/23',
     country: '日本',
     message: '温室効果ガス(二酸化炭素, メタンetc)おいしいよ〜',
-    imageSrc: '/images/hinode-small.png',
+    imageSrc: '/images/ibuki-small.png',
     iconSrc: '/images/ibuki-icon.png',
+    chatIconSrc: '/images/ibuki-icon-chat.png',
 };
 
 exports.landsat8 = {
@@ -29,6 +31,7 @@ exports.landsat8 = {
     birthday: '2013/02/11',
     country: 'アメリカ',
     message: '地球の姿を上からいつも見守ってます！',
-    imageSrc: '/images/hinode-small.png',
+    imageSrc: '/images/landsat8-small.png',
     iconSrc: '/images/landsat8-icon.png',
+    chatIconSrc: '/images/landsat8-icon-chat.png',
 };

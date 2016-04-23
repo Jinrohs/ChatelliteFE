@@ -1,7 +1,8 @@
 'use strict';
 
 var satelliteData = require('./satellite-data');
-var comments = [];
+var comments = {};
+var commentCount = 0;
 
 var $commentTemplate = $('.comment');
 var commentHeight = $commentTemplate.height();
@@ -15,21 +16,22 @@ function sortComments() {
     });
 }
 
-function removeFirstComment() {
-    if (!comments.length) {
-        return;
-    }
-
-    comments.pop();
-
-    $('#comments-content .comment:first-child').remove();
-
-    sortComments();
-}
+// function removeFirstComment() {
+//     if (!comments.length) {
+//         return;
+//     }
+//
+//     // comments.pop();
+//     commentCount--;
+//
+//     $('#comments-content .comment:first-child').remove();
+//
+//     sortComments();
+// }
 
 function addComment(name, comment) {
     var $comment = $commentTemplate.clone();
-    var commentConut = comments.length;
+    // var commentConut = commentCount;
 
     $comment
         .css({
@@ -37,6 +39,7 @@ function addComment(name, comment) {
         })
         .appendTo('#comments-content')
         .removeClass('hide')
+        .addClass(comment.id)
         .animate({
             top: commentConut * (commentHeight + 8)
         }, 200);
@@ -48,9 +51,15 @@ function addComment(name, comment) {
         .text(satelliteData[name].name);
 
     $comment.find('.comment-icon')
-        .attr('src', satelliteData[name].iconSrc);
+        .attr('src', satelliteData[name].chatIconSrc);
 
-    comments.push(comment);
+    // comments[comment.id](comment);
+    commentCount++;
+
+    setTimeout(function () {
+        $('#comments-content .comment.' + comment.id).remove();
+        commentCount++;
+    }, 3000);
 
     sortComments();
 }
@@ -59,7 +68,7 @@ var autoAdd = function (name) {
     setTimeout(function () {
         console.log('comment fired');
 
-        if (comments.length > 6) {
+        if (commentCount > 6) {
             autoAdd();
             return;
         }
@@ -69,17 +78,23 @@ var autoAdd = function (name) {
             timestamp: Math.round(Date.now()/1000)
         };
 
-        $.get('http://210.129.18.214:30000', params, function (commentData) {
-            addComment(name, commentData.result[0]);
-            autoAdd(name);
-        });
+        $.get('http://210.129.18.214:30000', params)
+            .done(function (commentData) {
+                addComment(name, commentData.result[0]);
+            })
+            .fail(function (error) {
+                console.log(error);
+            })
+            .always(function () {
+                autoAdd(name);
+            });
 
     }, _.random(5, 20) * 1000);
 };
 
 var autoRemove = function () {
     setTimeout(function () {
-        if (comments.length > 2) {
+        if (commentCount > 2) {
             setTimeout(removeFirstComment, 300);
         }
         autoRemove();
@@ -90,5 +105,5 @@ module.exports = function (viewer) {
     autoAdd('hinode');
     autoAdd('ibuki');
     autoAdd('landsat8');
-    autoRemove();
+    // autoRemove();
 }

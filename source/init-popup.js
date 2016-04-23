@@ -24,10 +24,25 @@ module.exports = function initPopup(viewer) {
                 $popup.find('.country').text(data.country);
                 $popup.find('.weight').text(data.weight);
                 $popup.find('.message').text(data.message);
+                $popup.find('.norad-id').text(data.id);
                 $popup.find('.popup-image').attr('src', data.imageSrc);
             }
 
-            $popup.removeClass('hide');
+            $popup.find('#popup-inner')
+                .css({
+                    marginTop: 15,
+                    opacity: 0
+                });
+
+            $popup
+                .removeClass('hide');
+
+            $popup.find('#popup-inner')
+                .animate({
+                    marginTop: 0,
+                    opacity: 1
+                }, 400);
+
         }
     }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
 };

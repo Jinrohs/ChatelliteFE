@@ -10,7 +10,7 @@ module.exports = function initSplash(callback) {
         .animate({
             marginTop: logoPositionYCenter,
             opacity: 1
-        }, 1000, function () {
+        }, 1500, function () {
             setTimeout(function () {
                 $splash.animate({ opacity: 0 }, 700, function () {
                     $splash.addClass('hide');
