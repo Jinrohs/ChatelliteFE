@@ -33,19 +33,20 @@ mixin popup
                     span.norad-id
                 img.popup-close-button(src='/images/cancel-button.png')
             section#popup-content
-                section#popup-image-container
+                section#popup-left-container
                     img.popup-image
-                section#popup-detail-container
-                    section
-                        h3 国籍
-                        p.country
-                    section
-                        h3 誕生日
-                        p.birthday
-                    section
-                        h3 体重
-                        p.weight
-                    section
+                section#popup-right-container
+                    #popup-details-container
+                        section
+                            h3 国籍
+                            p.country
+                        section
+                            h3 誕生日
+                            p.birthday
+                        section
+                            h3 体重
+                            p.weight
+                    #popup-message-container
                         h3 メッセージ
                         p.message
             section#popup-gallery
