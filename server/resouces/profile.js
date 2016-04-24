@@ -150,5 +150,27 @@ module.exports = {
                 resolution: 120
             }
         };
+    },
+    
+    debris1Default: function() {
+        return {
+            id: "debris/1/default",
+            name: "debris1"            
+        };
+    },
+    
+    debris1: function(index, startTime, endTime, message) {
+        return {
+            id: "debris/1/" + index,
+            name: "debris1",
+            availability: [utility.getIntervalStr(startTime, endTime)],
+            parent: "debris/1/default",
+            billboard: {
+                image: "/images/landsat8-icon.png",
+                scale: 1.0,
+                show: true
+            },
+            label: createLabel("Debris", message),
+        };            
     }
 };
