@@ -50,3 +50,16 @@ exports.landsat8 = {
         '/images/landsat8-gallery-image-3.jpg',
     ]
 };
+
+exports.debri = {
+    id: 0,
+    name: 'Debli',
+    weight: '--kg',
+    birthday: '不明',
+    country: '不明',
+    message: '不明',
+    imageSrc: '',
+    iconSrc: '',
+    chatIconSrc: '',
+    galleryImageSrcs: []
+};

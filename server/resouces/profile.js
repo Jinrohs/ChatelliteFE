@@ -33,13 +33,13 @@ var createLabel = function(name, message) {
     };
 };
 
-module.exports = {    
+module.exports = {
     document: function(startTime, endTime) {
         if(startTime == undefined || endTime == undefined) {
             return {
                 id: "document",
                 name: "satecolle",
-                version: "1.0",                
+                version: "1.0",
             };
         }
         return {
@@ -151,14 +151,14 @@ module.exports = {
             }
         };
     },
-    
+
     debris1Default: function() {
         return {
             id: "debris/1/default",
-            name: "debris1"            
+            name: "debris1"
         };
     },
-    
+
     debris1: function(index, startTime, endTime, message) {
         return {
             id: "debris/1/" + index,
@@ -166,11 +166,11 @@ module.exports = {
             availability: [utility.getIntervalStr(startTime, endTime)],
             parent: "debris/1/default",
             billboard: {
-                image: "/images/circle-icon.png",
-                scale: 0.7,
+                image: "/images/debris-icon.png",
+                scale: 1.0,
                 show: true
             },
             label: createLabel("Debris", message),
-        };            
+        };
     }
 };
