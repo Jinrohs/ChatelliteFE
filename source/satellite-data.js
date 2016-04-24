@@ -10,6 +10,11 @@ exports.hinode = {
     imageSrc: '/images/hinode-small.png',
     iconSrc: '/images/hinode-icon.png',
     chatIconSrc: '/images/hinode-icon-chat.png',
+    galleryImageSrcs: [
+        '/images/hinode-gallery-image-1.jpg',
+        '/images/hinode-gallery-image-2.png',
+        '/images/hinode-gallery-image-3.jpg',
+    ]
 };
 
 exports.ibuki = {
@@ -22,6 +27,11 @@ exports.ibuki = {
     imageSrc: '/images/ibuki-small.png',
     iconSrc: '/images/ibuki-icon.png',
     chatIconSrc: '/images/ibuki-icon-chat.png',
+    galleryImageSrcs: [
+        '/images/ibuki-gallery-image-1.gif',
+        '/images/ibuki-gallery-image-2.jpg',
+        '/images/ibuki-gallery-image-3.jpg',
+    ]
 };
 
 exports.landsat8 = {
@@ -34,4 +44,9 @@ exports.landsat8 = {
     imageSrc: '/images/landsat8-small.png',
     iconSrc: '/images/landsat8-icon.png',
     chatIconSrc: '/images/landsat8-icon-chat.png',
+    galleryImageSrcs: [
+        '/images/landsat8-gallery-image-1.jpg',
+        '/images/landsat8-gallery-image-2.jpg',
+        '/images/landsat8-gallery-image-3.jpg',
+    ]
 };
