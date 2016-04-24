@@ -166,8 +166,8 @@ module.exports = {
             availability: [utility.getIntervalStr(startTime, endTime)],
             parent: "debris/1/default",
             billboard: {
-                image: "/images/landsat8-icon.png",
-                scale: 1.0,
+                image: "/images/circle-icon.png",
+                scale: 0.7,
                 show: true
             },
             label: createLabel("Debris", message),
