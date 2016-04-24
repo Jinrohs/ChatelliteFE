@@ -33,7 +33,8 @@ module.exports = function initPopup(viewer) {
             console.log(pickedObject.id.name);
 
             var data = satelliteData[pickedObject.id.name];
-            console.log(data);
+
+            data = _.defaults(data, satelliteData.debri);
 
             if (data) {
                 $popup.find('#popup-title').text(data.name);
@@ -47,9 +48,6 @@ module.exports = function initPopup(viewer) {
                 data.galleryImageSrcs.forEach(function (src) {
                     var $img = $('<img class="popup-gallery-image">').attr('src', src);
                     $img.appendTo($('#popup-gallery'));
-                    // $img.appendTo($('#popup-gallery'));
-                    // $img.appendTo($('#popup-gallery'));
-                    // $popup.find('#popup-gallery').('src', data.imageSrc);
                 });
             }
 
