@@ -24,6 +24,8 @@ var createDefaultCzml = function() {
     czml.push(profile.hinodeDefault());
     czml.push(profile.landsat8Default());
     czml.push(profile.debris1Default());
+    czml.push(profile.debris2Default());
+    czml.push(profile.debris3Default());
     return czml;    
 };
 
@@ -49,19 +51,25 @@ var createCzml = function(data, startTime, endTime) {
     var hinodePosition = convertCatesianPosition(resultSet[nameToCode('hinode')]);
     var landsat8Position = convertCatesianPosition(resultSet[nameToCode('landsat8')]);
     var debris1Position = convertCatesianPosition(resultSet[nameToCode('debris1')]);
+    var debris2Position = convertCatesianPosition(resultSet[nameToCode('debris2')]);
+    var debris3Position = convertCatesianPosition(resultSet[nameToCode('debris3')]);
     
     var documentPacket = profile.document(startTime, endTime);
     var ibukiPacket = createSatellitePacket('ibuki', startTime, endTime, ibukiPosition);
     var hinodePacket = createSatellitePacket('hinode', startTime, endTime, hinodePosition);
     var landsat8Packet = createSatellitePacket('landsat8', startTime, endTime, landsat8Position);
     var debris1Packet = createSatellitePacket('debris1', startTime, endTime, debris1Position);
-    console.log(debris1Packet);
+    var debris2Packet = createSatellitePacket('debris2', startTime, endTime, debris2Position);
+    var debris3Packet = createSatellitePacket('debris3', startTime, endTime, debris3Position);
+    
     var czml = [];
     czml.push(documentPacket);
     czml.push(ibukiPacket);
     czml.push(hinodePacket);
     czml.push(landsat8Packet);
     czml.push(debris1Packet);
+    czml.push(debris2Packet);
+    czml.push(debris3Packet);   
     return czml;
 };
 
@@ -91,6 +99,12 @@ var createSatellitePacket = function(name, startTime, endTime, position, message
         case "debris1":
             obj = profile.debris1(index, startTime, endTime, message);
             break;
+        case "debris2":
+            obj = profile.debris2(index, startTime, endTime, message);
+            break;
+        case "debris3":
+            obj = profile.debris3(index, startTime, endTime, message);
+            break;            
     }
     obj.position = {
         interpolationAlgorithm: "LAGRANGE",
@@ -112,6 +126,10 @@ var codeToName = function(code) {
             return "landsat8";
         case 32038:
             return "debris1";
+        case 39244:
+            return "debris2";
+        case 36399:
+            return "debris3";
         default:
             return -1;
     }
@@ -127,6 +145,10 @@ var nameToCode = function(name) {
             return 39084;
         case "debris1":
             return 32038;
+        case "debris2":
+            return 39244;
+        case "debris3":
+            return 36399;
         default:
             return -1;
     }
