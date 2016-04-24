@@ -1,7 +1,7 @@
 var utility = require('../utility');
 var configure = require('../configure');
 
-var createLabel = function(name, message) {
+var createLabel = function(name, message, leftOffset) {
     var content = name
     if(message != undefined) {
         content += " 「" + message + "」";
@@ -24,7 +24,7 @@ var createLabel = function(name, message) {
         "outlineWidth":2,
         "pixelOffset":{
             "cartesian2":[
-                40, 10
+                (leftOffset|| 40), 10
             ]
         },
         show: true,
@@ -170,7 +170,7 @@ module.exports = {
                 scale: 0.7,
                 show: true
             },
-            label: createLabel("Debris", message),
+            label: createLabel("Debris", message, 20),
         };            
     }
 };
