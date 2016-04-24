@@ -23,6 +23,7 @@ var createDefaultCzml = function() {
     czml.push(profile.ibukiDefault());
     czml.push(profile.hinodeDefault());
     czml.push(profile.landsat8Default());
+    czml.push(profile.debris1Default());
     return czml;    
 };
 
@@ -47,17 +48,20 @@ var createCzml = function(data, startTime, endTime) {
     var ibukiPosition = convertCatesianPosition(resultSet[nameToCode('ibuki')]);
     var hinodePosition = convertCatesianPosition(resultSet[nameToCode('hinode')]);
     var landsat8Position = convertCatesianPosition(resultSet[nameToCode('landsat8')]);
+    var debris1Position = convertCatesianPosition(resultSet[nameToCode('debris1')]);
     
     var documentPacket = profile.document(startTime, endTime);
     var ibukiPacket = createSatellitePacket('ibuki', startTime, endTime, ibukiPosition);
     var hinodePacket = createSatellitePacket('hinode', startTime, endTime, hinodePosition);
     var landsat8Packet = createSatellitePacket('landsat8', startTime, endTime, landsat8Position);
-
+    var debris1Packet = createSatellitePacket('debris1', startTime, endTime, debris1Position);
+    console.log(debris1Packet);
     var czml = [];
     czml.push(documentPacket);
     czml.push(ibukiPacket);
     czml.push(hinodePacket);
     czml.push(landsat8Packet);
+    czml.push(debris1Packet);
     return czml;
 };
 
@@ -84,6 +88,9 @@ var createSatellitePacket = function(name, startTime, endTime, position, message
         case "landsat8":
             obj = profile.landsat8(index, startTime, endTime, message);
             break;
+        case "debris1":
+            obj = profile.debris1(index, startTime, endTime, message);
+            break;
     }
     obj.position = {
         interpolationAlgorithm: "LAGRANGE",
@@ -103,6 +110,8 @@ var codeToName = function(code) {
             return "ibuki";
         case 39084:
             return "landsat8";
+        case 32038:
+            return "debris1";
         default:
             return -1;
     }
@@ -116,6 +125,8 @@ var nameToCode = function(name) {
             return 33492;
         case "landsat8":
             return 39084;
+        case "debris1":
+            return 32038;
         default:
             return -1;
     }
@@ -145,7 +156,6 @@ var loadOrbit = function(startTime, endTime, callback) {
     
     var url = getOrbitApiUrl(startTime, endTime);    
     superagent.get(url).end(function(err, res){
-        console.log(res.text);
         callback(res.text);        
     });
 };

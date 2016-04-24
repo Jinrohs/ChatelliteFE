@@ -169,12 +169,20 @@ p, h1, h2, h3, h4, h5 {
     display: flex;
 }
 
-#popup-image-container {
+#popup-left-container {
     flex: 0.5;
     margin-right: 25px;
 }
 
-#popup-detail-container {
+#popup-right-container {
+    flex: 1;
+}
+
+#popup-details-container {
+    display: flex;
+}
+
+#popup-details-container section {
     flex: 1;
 }
 
