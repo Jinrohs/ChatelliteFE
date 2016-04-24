@@ -3,8 +3,10 @@ var satelliteData = require('./satellite-data');
 module.exports = function initPopup(viewer) {
     var $popup = $('#popup');
     var $popupInner = $popup.find('#popup-inner');
+    var $popupGallery = $('#popup-gallery');
 
-    $popup.on('click', function () {
+    // ポップアップをクローズ
+    $popup.find('.popup-close-button').on('click', function () {
         $popupInner
             .animate({
                 marginTop: 15,
@@ -18,6 +20,8 @@ module.exports = function initPopup(viewer) {
 
                 $popup.addClass('hide');
             });
+
+        $popupGallery.children().remove();
     });
 
     // 衛星のクリックイベント
@@ -39,6 +43,14 @@ module.exports = function initPopup(viewer) {
                 $popup.find('.message').text(data.message);
                 $popup.find('.norad-id').text(data.id);
                 $popup.find('.popup-image').attr('src', data.imageSrc);
+
+                data.galleryImageSrcs.forEach(function (src) {
+                    var $img = $('<img class="popup-gallery-image">').attr('src', src);
+                    $img.appendTo($('#popup-gallery'));
+                    // $img.appendTo($('#popup-gallery'));
+                    // $img.appendTo($('#popup-gallery'));
+                    // $popup.find('#popup-gallery').('src', data.imageSrc);
+                });
             }
 
             $popupInner
