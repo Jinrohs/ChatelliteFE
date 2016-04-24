@@ -170,7 +170,51 @@ module.exports = {
                 scale: 1.0,
                 show: true
             },
-            label: createLabel("Debris", message, 20),
+            label: createLabel("Debris1", message, 20),
+        };
+    },
+    
+    debris2Default: function() {
+        return {
+            id: "debris/2/default",
+            name: "debris2"
+        };
+    },
+
+    debris2: function(index, startTime, endTime, message) {
+        return {
+            id: "debris/2/" + index,
+            name: "debris2",
+            availability: [utility.getIntervalStr(startTime, endTime)],
+            parent: "debris/2/default",
+            billboard: {
+                image: "/images/debris-icon.png",
+                scale: 1.0,
+                show: true
+            },
+            label: createLabel("Debris2", message, 20),
+        };
+    },
+    
+    debris3Default: function() {
+        return {
+            id: "debris/3/default",
+            name: "debris3"
+        };
+    },
+
+    debris3: function(index, startTime, endTime, message) {
+        return {
+            id: "debris/3/" + index,
+            name: "debris3",
+            availability: [utility.getIntervalStr(startTime, endTime)],
+            parent: "debris/3/default",
+            billboard: {
+                image: "/images/debris-icon.png",
+                scale: 1.0,
+                show: true
+            },
+            label: createLabel("Debris3", message, 20),
         };
     }
 };
