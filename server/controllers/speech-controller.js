@@ -8,11 +8,15 @@ var loadSpeech = function(id, timestamp, callback) {
         id: id,
         timestamp: timestamp
     };
-    
+
     superagent
         .get(configure.speechApi)
         .query(params)
-        .end(function(err, res) {            
+        .end(function(err, res) {
+            if (err) {
+                return;
+            }
+
             callback(res.body);
         });
 };

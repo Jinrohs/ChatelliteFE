@@ -59,8 +59,8 @@ var autoAdd = function (name) {
         }
 
         var id = satelliteData[name].id;
-        var timestamp = Math.round(Date.now()/1000); 
-        var url = '/api/speech/' + id + '/' + timestamp;     
+        var timestamp = Math.round(Date.now()/1000);
+        var url = '/api/speech/' + id + '/' + timestamp;
         $.get(url)
             .done(function (commentData) {
                 console.log('comment done');
