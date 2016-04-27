@@ -5,6 +5,7 @@ const errorhandler = require('errorhandler');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const czmlController = require('./controllers/CzmlController');
+const speechController = require('./controllers/speech-controller');
 const app = express();
 const router = express.Router();
 
@@ -28,6 +29,9 @@ router.get('/', (req, res) => {
 
 router.get('/api/czml/:command/:option?', (req, res) => {
     czmlController.handler(req, res);
+});
+router.get('/api/speech/:id/:timestamp', (req, res) => {
+    speechController.handler(req, res);
 });
 
 if (process.env === 'development') {
