@@ -58,12 +58,10 @@ var autoAdd = function (name) {
             return;
         }
 
-        var params = {
-            id: satelliteData[name].id,
-            timestamp: Math.round(Date.now()/1000)
-        };
-
-        $.get('http://210.129.18.214:30000', params)
+        var id = satelliteData[name].id;
+        var timestamp = Math.round(Date.now()/1000); 
+        var url = '/api/speech/' + id + '/' + timestamp;     
+        $.get(url)
             .done(function (commentData) {
                 console.log('comment done');
                 addComment(name, commentData.result[0]);
