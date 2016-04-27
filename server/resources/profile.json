@@ -1,0 +1,83 @@
+{
+     "29479": {
+        "birthday": 1158937200,
+        "imageSrc": "/images/hinode-small.png",
+        "icon": {
+            "src": "/images/hinode-icon.png",
+            "scale": 1.0            
+        },
+        "chatIconSrc": "/images/hinode-icon-chat.png",
+        "galleryImageSrcs": [
+            "/images/hinode-gallery-image-1.jpg",
+            "/images/hinode-gallery-image-2.png",
+            "/images/hinode-gallery-image-3.jpg"
+        ],
+        "path": {
+            "show": true,
+            "width": 1,            
+            "color": [ 255, 150, 255, 255 ]
+        } 
+    },
+    "33492": {
+        "birthday": 1232636400,
+        "description": "I reglarly observe greenhous effect gas such CO2 or methane, almost over the earth. As a result of 3 and half years, I discovered relation of human activity and increasing greenhouse effect gas.",
+        "imageSrc": "/images/ibuki-small.png",
+        "icon": {
+            "src": "/images/ibuki-icon.png",
+            "scale": 1.0
+        },
+        "chatIconSrc": "/images/ibuki-icon-chat.png",
+        "galleryImageSrcs": [
+            "/images/ibuki-gallery-image-1.gif",
+            "/images/ibuki-gallery-image-2.jpg",
+            "/images/ibuki-gallery-image-3.jpg"
+        ],
+        "path": {
+            "show": true,
+            "width": 1,            
+            "color": [ 150, 255, 255, 255 ]
+        } 
+    },
+    "39084": {
+        "birthday": 1360508400,
+        "description": "I'm a 8th satellite of the Landsat plan which is storeing earth's data more than 40 years. Data which I stored is maybe used for any fields; supporting for disaster, understanding terrain, climinate change, or circulation of water etc.",
+        "imageSrc": "/images/landsat8-small.png",
+        "icon": {
+            "src": "/images/landsat8-icon.png",
+            "scale": 1.0
+        },
+        "chatIconSrc": "/images/landsat8-icon-chat.png",
+        "galleryImageSrcs": [
+            "/images/landsat8-gallery-image-1.jpg",
+            "/images/landsat8-gallery-image-2.jpg",
+            "/images/landsat8-gallery-image-3.jpg"
+        ],
+        "path": {
+            "show": true,
+            "width": 1,            
+            "color": [ 255, 255, 150, 255 ]
+        }   
+    },
+    "32038": {
+        "icon": {
+            "src": "/images/debris-icon.png",
+            "scale": 1.0
+        },
+        "path": {"show": false }
+    },
+    "39244" : {
+        "icon": {
+            "src": "/images/debris-icon.png",
+            "scale": 1.0
+        },
+        "path": {"show": false }
+    },    
+    "36399" : {
+        "icon": {
+            "src": "/images/debris-icon.png",
+            "scale": 1.0
+        },
+        "path": {"show": false }
+    }    
+    
+}

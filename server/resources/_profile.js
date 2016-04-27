@@ -34,28 +34,6 @@ var createLabel = function(name, message, leftOffset) {
 };
 
 module.exports = {
-    document: function(startTime, endTime) {
-        if(startTime == undefined || endTime == undefined) {
-            return {
-                id: "document",
-                name: "satecolle",
-                version: "1.0",
-            };
-        }
-        return {
-            id: "document",
-            name: "satecolle",
-            version: "1.0",
-            clock :{
-                interval: utility.getIntervalStr(startTime, endTime),
-                currentTime: utility.toTimeStringFormat(startTime),
-                multiplier: configure.multiplier,
-                range: "LOOP_STOP",
-                step: "SYSTEM_CLOCK_MULTIPLIER"
-            }
-        };
-    },
-
     hinodeDefault: function() {
         return {
             id: "satellite/hinode/default",
