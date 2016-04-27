@@ -1,7 +1,7 @@
 'use strict';
 
-const reamingTimeForReload = 0.1;
-const timeInterval = 7200;
+var reamingTimeForReload = 0.1;
+var timeInterval = 7200;
 
 var viewer;
 var previousStopTime;
