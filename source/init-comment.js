@@ -5,6 +5,7 @@ var commentCount = 0;
 var commentMarginBottom = 8;
 var $commentTemplate = $('.comment');
 var commentHeight = $commentTemplate.height();
+var viewer;
 
 function sortComments() {
     $('#comments-content .comment').each(function (index) {
@@ -59,8 +60,12 @@ var autoAdd = function (name) {
         }
 
         var id = satelliteData[name].id;
-        var timestamp = Math.round(Date.now()/1000); 
-        var url = '/api/speech/' + id + '/' + timestamp;     
+
+        var date = Cesium.JulianDate.toDate(viewer.clock.currentTime);
+        var timezoneOffset = date.getTimezoneOffset() * 60;
+        var currentTime = Math.round(date.getTime() / 1000) + timezoneOffset;
+
+        var url = '/api/speech/' + id + '/' + currentTime;     
         $.get(url)
             .done(function (commentData) {
                 console.log('comment done');
@@ -75,7 +80,8 @@ var autoAdd = function (name) {
     }, _.random(3, 15) * 1000);
 };
 
-module.exports = function (viewer) {
+module.exports = function (_viewer) {
+    viewer = _viewer;
     autoAdd('hinode');
     autoAdd('ibuki');
     autoAdd('landsat8');
