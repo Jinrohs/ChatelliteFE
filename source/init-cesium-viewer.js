@@ -4,32 +4,31 @@ var reamingTimeForReload = 0.1;
 var timeInterval = 7200;
 var previousStopTime = null;
 
-var onTickListener = function(clock) {
+function onTickListener(viewer, clock) {
     if(isNextLoad(clock)) {
-        loadNextOrbit(clock);
+        loadNextOrbit(viewer, clock);
     }
-};
+}
 
-var isNextLoad = function(clock) {
+function isNextLoad(clock) {
     if(previousStopTime === null) {
         return true;
     }
     var reaming = Cesium.JulianDate.secondsDifference(clock.stopTime, clock.currentTime);
     return reaming <= reamingTimeForReload;
-    //return false;
 }
 
-var loadNextOrbit = function(clock) {
+function loadNextOrbit(viewer, clock) {
     var timeRange = getNextTimeRange(clock);
     previousStopTime = timeRange.stopTime;
 
     var api = getApiUrl(timeRange);
     console.log("loading..: " + api);
     viewer.dataSources.add(Cesium.CzmlDataSource.load(api));
-};
+}
 
-var getNextTimeRange = function(clock) {
-    var startTime = Math.round(new Date.now() / 1000);
+function getNextTimeRange(clock) {
+    var startTime = Math.round(Date.now() / 1000);
     if (previousStopTime !== null) {
         console.log('update');
         startTime = previousStopTime;
@@ -40,9 +39,9 @@ var getNextTimeRange = function(clock) {
         startTime: startTime,
         stopTime: stopTime
     };
-};
+}
 
-var getApiUrl = function(timeRange) {
+function getApiUrl(timeRange) {
     return '/api/czml/get/' + timeRange.startTime + "-" + timeRange.stopTime;
 }
 
@@ -69,7 +68,9 @@ module.exports = function () {
     }
     viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
     viewer.dataSources.add(Cesium.CzmlDataSource.load('/api/czml/default'));
-    viewer.clock.onTick.addEventListener(onTickListener);
+    viewer.clock.onTick.addEventListener(function (clock) {
+        onTickListener(viewer, clock);
+    });
 
     return viewer;
 };
