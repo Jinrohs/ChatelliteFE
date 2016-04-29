@@ -5,7 +5,6 @@ var commentCount = 0;
 var commentMarginBottom = 8;
 var $commentTemplate = $('.comment');
 var commentHeight = $commentTemplate.height();
-var viewer;
 
 function sortComments() {
     $('#comments-content .comment').each(function (index) {
@@ -18,6 +17,7 @@ function sortComments() {
 
 function addComment(name, comment) {
     var $comment = $commentTemplate.clone();
+
     $comment
         .css({
             top: commentCount * (commentHeight + commentMarginBottom) + commentHeight / 2
@@ -43,46 +43,48 @@ function addComment(name, comment) {
 
     // 削除イベントをバインド
     setTimeout(function () {
-        console.log(comment);
-        commentCount--;
-        $('#comments-content .comment.' + comment.id).remove();
-        sortComments();
+        removeComment(comment.id);
     }, 10000);
 }
 
-var autoAdd = function (name) {
+function removeComment(commentId) {
+    $('#comments-content .comment.' + commentId).remove();
+
+    commentCount--;
+    sortComments();
+}
+
+var autoAdd = function (satelliteName, viewerCurrentTime) {
     setTimeout(function () {
-        console.log('comment fired');
+        console.log('comment fired.');
 
         if (commentCount > 6) {
-            autoAdd(name);
+            autoAdd(satelliteName);
             return;
         }
 
         var id = satelliteData[name].id;
-
-        var date = Cesium.JulianDate.toDate(viewer.clock.currentTime);
+        var date = Cesium.JulianDate.toDate(viewerCurrentTime);
         var timezoneOffset = date.getTimezoneOffset() * 60;
         var currentTime = Math.round(date.getTime() / 1000) + timezoneOffset;
+        var url = '/api/speech/' + id + '/' + currentTime;
 
-        var url = '/api/speech/' + id + '/' + currentTime;     
         $.get(url)
             .done(function (commentData) {
                 console.log('comment done');
-                addComment(name, commentData.result[0]);
+                addComment(satelliteName, commentData.result[0]);
             })
             .fail(function (error) {
                 console.log(error);
             })
             .always(function () {
-                autoAdd(name);
+                autoAdd(satelliteName);
             });
     }, _.random(3, 15) * 1000);
 };
 
-module.exports = function (_viewer) {
-    viewer = _viewer;
-    autoAdd('hinode');
-    autoAdd('ibuki');
-    autoAdd('landsat8');
-}
+module.exports = function (viewer) {
+    autoAdd('hinode', viewer.clock.currentTime);
+    autoAdd('ibuki', viewer.clock.currentTime);
+    autoAdd('landsat8', viewer.clock.currentTime);
+};

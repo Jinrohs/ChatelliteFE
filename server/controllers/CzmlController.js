@@ -26,7 +26,7 @@ var createDefaultCzml = function() {
     czml.push(profile.debris1Default());
     czml.push(profile.debris2Default());
     czml.push(profile.debris3Default());
-    return czml;    
+    return czml;
 };
 
 var renderNextCzml = function(req, res) {
@@ -35,11 +35,11 @@ var renderNextCzml = function(req, res) {
         res.status(404);
         res.end("Specify starttime-endtime");
     }
-    
+
     var time = parseRequestedTime(option);
     loadOrbit(time.startTime, time.endTime, function(data) {
         var czml = createCzml(data, time.startTime, time.endTime);
-        res.json(czml);       
+        res.json(czml);
     });
 };
 
@@ -53,7 +53,7 @@ var createCzml = function(data, startTime, endTime) {
     var debris1Position = convertCatesianPosition(resultSet[nameToCode('debris1')]);
     var debris2Position = convertCatesianPosition(resultSet[nameToCode('debris2')]);
     var debris3Position = convertCatesianPosition(resultSet[nameToCode('debris3')]);
-    
+
     var documentPacket = profile.document(startTime, endTime);
     var ibukiPacket = createSatellitePacket('ibuki', startTime, endTime, ibukiPosition);
     var hinodePacket = createSatellitePacket('hinode', startTime, endTime, hinodePosition);
@@ -61,7 +61,7 @@ var createCzml = function(data, startTime, endTime) {
     var debris1Packet = createSatellitePacket('debris1', startTime, endTime, debris1Position);
     var debris2Packet = createSatellitePacket('debris2', startTime, endTime, debris2Position);
     var debris3Packet = createSatellitePacket('debris3', startTime, endTime, debris3Position);
-    
+
     var czml = [];
     czml.push(documentPacket);
     czml.push(ibukiPacket);
@@ -69,7 +69,7 @@ var createCzml = function(data, startTime, endTime) {
     czml.push(landsat8Packet);
     czml.push(debris1Packet);
     czml.push(debris2Packet);
-    czml.push(debris3Packet);   
+    czml.push(debris3Packet);
     return czml;
 };
 
@@ -104,7 +104,7 @@ var createSatellitePacket = function(name, startTime, endTime, position, message
             break;
         case "debris3":
             obj = profile.debris3(index, startTime, endTime, message);
-            break;            
+            break;
     }
     obj.position = {
         interpolationAlgorithm: "LAGRANGE",
@@ -159,11 +159,11 @@ var parseRequestedTime = function(option) {
     return {
         "startTime": new Date(Number(val[0]) * 1000),
         "endTime": new Date(Number(val[1]) * 1000)
-    };    
+    };
 }
 
 /**
- * APIから軌道などを取得します。 
+ * APIから軌道などを取得します。
  * @param startTime 取得開始日時
  * @param endTime 取得終了日時
  * @param callback コールバック関数
@@ -171,14 +171,18 @@ var parseRequestedTime = function(option) {
 var loadOrbit = function(startTime, endTime, callback) {
     // dummy
     /*
-    if(false) { 
+    if(false) {
         callback(dummy.cartesian1);
         return;
     }*/
-    
-    var url = getOrbitApiUrl(startTime, endTime);    
+
+    var url = getOrbitApiUrl(startTime, endTime);
     superagent.get(url).end(function(err, res){
-        callback(res.text);        
+        if (err) {
+            console.log(err);
+            return;
+        }
+        callback(res.text);
     });
 };
 
@@ -186,7 +190,7 @@ var getOrbitApiUrl = function(startTime, endTime) {
     var url = "http://" + configure.orbitApi + ":" + configure.orbitApiPort;
     var sTime = Math.round(startTime.getTime() / 1000);
     var eTime = Math.round(endTime.getTime() / 1000);
-    return url + "/xyz?start=" + sTime + "&end=" + eTime; 
+    return url + "/xyz?start=" + sTime + "&end=" + eTime;
 };
 
 module.exports = {
@@ -195,7 +199,7 @@ module.exports = {
         var option = req.params.option;
         console.log("command:" + command);
         console.log("option:" + option);
-        
+
         switch(command) {
             case 'default':
                 renderDefault(req, res);
@@ -204,4 +208,4 @@ module.exports = {
                 renderNextCzml(req, res);
         }
     }
-}; 
+};
