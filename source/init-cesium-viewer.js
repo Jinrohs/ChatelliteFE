@@ -2,18 +2,16 @@
 
 var reamingTimeForReload = 0.1;
 var timeInterval = 7200;
-
-var viewer;
-var previousStopTime;
+var previousStopTime = null;
 
 var onTickListener = function(clock) {
     if(isNextLoad(clock)) {
         loadNextOrbit(clock);
-    }    
+    }
 };
 
 var isNextLoad = function(clock) {
-    if(previousStopTime == undefined) {
+    if(previousStopTime === null) {
         return true;
     }
     var reaming = Cesium.JulianDate.secondsDifference(clock.stopTime, clock.currentTime);
@@ -22,47 +20,44 @@ var isNextLoad = function(clock) {
 }
 
 var loadNextOrbit = function(clock) {
-    if(previousStopTime == undefined) {
-        //viewer.dataSources.add(Cesium.CzmlDataSource.load('/api/czml/default'));
-    }
     var timeRange = getNextTimeRange(clock);
     previousStopTime = timeRange.stopTime;
+
     var api = getApiUrl(timeRange);
     console.log("loading..: " + api);
     viewer.dataSources.add(Cesium.CzmlDataSource.load(api));
 };
 
 var getNextTimeRange = function(clock) {
-    var startTime = Math.round(new Date().getTime() / 1000);
-    if (previousStopTime != undefined) {
+    var startTime = Math.round(new Date.now() / 1000);
+    if (previousStopTime !== null) {
         console.log('update');
         startTime = previousStopTime;
-        //startTime = Math.round(Cesium.JulianDate.toDate(clock.stopTime).getTime() / 1000);
-        //startTime = Math.round(Cesium.JulianDate.toDate(clock.currentTime).getTime() / 1000);
     }
     var stopTime = Math.round(new Date((startTime + timeInterval) * 1000).getTime() / 1000);
-    return {"startTime": startTime, "stopTime": stopTime};
+
+    return {
+        startTime: startTime,
+        stopTime: stopTime
+    };
 };
 
 var getApiUrl = function(timeRange) {
     return '/api/czml/get/' + timeRange.startTime + "-" + timeRange.stopTime;
 }
 
-var getCurrentDateTime = function() {
-    return new Date();
-};
-
 module.exports = function () {
-    viewer = new Cesium.Viewer('cesium-container', {
+    var viewer = new Cesium.Viewer('cesium-container', {
         // timeline: false,
+        // homeButton: false,
         navigationHelpButton: false,
         infoBox: false,
-        // homeButton: false,
         geocoder: false,
         animation: false,
         navigationInstructionsInitiallyVisible: false,
         baseLayerPicker : false
     });
+
     if(!viewer.baseLayerPicker) {
         var blackMarble = viewer.imageryLayers.addImageryProvider(Cesium.createTileMapServiceImageryProvider({
             url: 'https://cesiumjs.org/blackmarble',
@@ -72,7 +67,7 @@ module.exports = function () {
         blackMarble.alpha = 1.0;
         blackMarble.brightness = 1.0;
     }
-    viewer.clock.clockRange =  Cesium.ClockRange.LOOP_STOP;
+    viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
     viewer.dataSources.add(Cesium.CzmlDataSource.load('/api/czml/default'));
     viewer.clock.onTick.addEventListener(onTickListener);
 
