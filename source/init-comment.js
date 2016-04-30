@@ -51,7 +51,7 @@ function addComment(name, comment) {
 }
 
 var autoAdd = function (name) {
-    setTimeout(function () {
+    var func = function() {
         console.log('comment fired');
 
         if (commentCount > 6) {
@@ -75,9 +75,11 @@ var autoAdd = function (name) {
                 console.log(error);
             })
             .always(function () {
-                autoAdd(name);
+                //autoAdd(name);
+                setTimeout(func, _.random(3, 15) * 1000);
             });
-    }, _.random(3, 15) * 1000);
+    };
+    setTimeout(func,  _.random(1, 4) * 1000);
 };
 
 module.exports = function (_viewer) {
