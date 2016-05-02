@@ -27,10 +27,10 @@ router.get('/', (req, res) => {
     res.render('index', {});
 });
 
-router.get('/api/czml/:command/:option?', (req, res) => {
+router.get('/api/czml/:timerange/:language?', (req, res) => {
     czmlController.handler(req, res);
 });
-router.get('/api/speech/:id/:timestamp', (req, res) => {
+router.get('/api/speech/:id/:timestamp/:language?', (req, res) => {
     speechController.handler(req, res);
 });
 

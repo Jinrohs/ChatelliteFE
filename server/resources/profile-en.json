@@ -1,0 +1,30 @@
+{
+    "29479" : {
+        "name": "Hinode",
+        "weight": "900kg",
+        "country": "Japan",
+        "description": "I'm a succesosor artifact to solor observation satellite 'Yoko'. I observe phisics phenomenon related solar flare at the maxmum solor activity, solor colona or others. I have 3 types of scope; for visible light, X ray, extreme ultraviolet ray."
+    },
+    "33492": {
+        "name": "Ibuki",
+        "weight": "1750kg",
+        "birthday": 1232636400,
+        "country": "Japan",
+        "description": "I reglarly observe greenhous effect gas such CO2 or methane, almost over the earth. As a result of 3 and half years, I discovered relation of human activity and increasing greenhouse effect gas."
+    },
+    "39084": {
+        "name": "Landsat 8",
+        "weight": "900kg",
+        "country": "USA",
+        "description": "I'm a 8th satellite of the Landsat plan which is storeing earth's data more than 40 years. Data which I stored is maybe used for any fields; supporting for disaster, understanding terrain, climinate change, or circulation of water etc."
+    },
+    "32038": {
+        "name": "debri"
+    },
+    "39244": {
+        "name": "debri"
+    },    
+    "36399": {
+        "name": "debri"        
+    }      
+}

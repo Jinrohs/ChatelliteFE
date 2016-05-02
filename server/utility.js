@@ -5,12 +5,13 @@ module.exports.getIntervalStr = function(startTime, endTime) {
 }
 
 module.exports.toTimeStringFormat = function(dateobj) {
-    return (dateobj.getYear() + 1900) + "-" + 
-        toDoubleDegitsStr(dateobj.getMonth() + 1) + "-" + 
-        toDoubleDegitsStr(dateobj.getDate()) + "T" +
-        toDoubleDegitsStr(dateobj.getHours()) + ":" +
-        toDoubleDegitsStr(dateobj.getMinutes()) + ":" +
-        toDoubleDegitsStr(dateobj.getSeconds()) + "Z";
+    var utc = dateobj.getU
+    return dateobj.getUTCFullYear() + "-" + 
+        toDoubleDegitsStr(dateobj.getUTCMonth() + 1) + "-" + 
+        toDoubleDegitsStr(dateobj.getUTCDate()) + "T" +
+        toDoubleDegitsStr(dateobj.getUTCHours()) + ":" +
+        toDoubleDegitsStr(dateobj.getUTCMinutes()) + ":" +
+        toDoubleDegitsStr(dateobj.getUTCSeconds()) + "Z";
 };
 
 var toDoubleDegitsStr = function(val) {

@@ -2,76 +2,97 @@
  * @brief CZMLを生成しレスポンスするコントローラです。
  */
 
-var fs = require('fs');
-var http = require('http');
 var configure = require('../configure');
-var profile = require('../resouces/profile');
 var utility = require('../utility');
-var dummy = require('../resouces/dummy');
 var superagent = require('superagent');
+var merge = require('merge');
+var commonProfiles = require('../resources/profile');
 
-/**
- * 初回のCZMLをレスポンスします。
- */
-var renderDefault = function(req, res) {
-    res.json(createDefaultCzml());
-};
-
-var createDefaultCzml = function() {
-    var czml = [];
-    czml.push(profile.document());
-    czml.push(profile.ibukiDefault());
-    czml.push(profile.hinodeDefault());
-    czml.push(profile.landsat8Default());
-    czml.push(profile.debris1Default());
-    czml.push(profile.debris2Default());
-    czml.push(profile.debris3Default());
-    return czml;
-};
-
-var renderNextCzml = function(req, res) {
-    var option = req.params.option;
-    if(option == undefined) {
-        res.status(404);
-        res.end("Specify starttime-endtime");
-    }
-
-    var time = parseRequestedTime(option);
-    loadOrbit(time.startTime, time.endTime, function(data) {
-        var czml = createCzml(data, time.startTime, time.endTime);
-        res.json(czml);
-    });
-};
-
-var createCzml = function(data, startTime, endTime) {
-    data = JSON.parse(data);
+var createCzml = function(data, timeRange, profiles) {
+    var czml = [getCzmlHeader(timeRange.startTime, timeRange.endTime)];    
+    
     var resultSet = data.ResultSet;
-
-    var ibukiPosition = convertCatesianPosition(resultSet[nameToCode('ibuki')]);
-    var hinodePosition = convertCatesianPosition(resultSet[nameToCode('hinode')]);
-    var landsat8Position = convertCatesianPosition(resultSet[nameToCode('landsat8')]);
-    var debris1Position = convertCatesianPosition(resultSet[nameToCode('debris1')]);
-    var debris2Position = convertCatesianPosition(resultSet[nameToCode('debris2')]);
-    var debris3Position = convertCatesianPosition(resultSet[nameToCode('debris3')]);
-
-    var documentPacket = profile.document(startTime, endTime);
-    var ibukiPacket = createSatellitePacket('ibuki', startTime, endTime, ibukiPosition);
-    var hinodePacket = createSatellitePacket('hinode', startTime, endTime, hinodePosition);
-    var landsat8Packet = createSatellitePacket('landsat8', startTime, endTime, landsat8Position);
-    var debris1Packet = createSatellitePacket('debris1', startTime, endTime, debris1Position);
-    var debris2Packet = createSatellitePacket('debris2', startTime, endTime, debris2Position);
-    var debris3Packet = createSatellitePacket('debris3', startTime, endTime, debris3Position);
-
-    var czml = [];
-    czml.push(documentPacket);
-    czml.push(ibukiPacket);
-    czml.push(hinodePacket);
-    czml.push(landsat8Packet);
-    czml.push(debris1Packet);
-    czml.push(debris2Packet);
-    czml.push(debris3Packet);
+    for(var id in resultSet) {
+        var position = convertCatesianPosition(resultSet[id]);
+        var packet = getCzmlPacket(id, timeRange, position, profiles[id]);
+        czml.push(packet);
+    }
+        
     return czml;
 };
+
+var getCzmlHeader = function(startTime, endTime) {
+    var header = { id: "document", name: "satecolle", version: "1.0", }; 
+    if(startTime && endTime) {
+        header.clock = {
+            interval: utility.getIntervalStr(startTime, endTime),
+            currentTime: utility.toTimeStringFormat(startTime),
+            multiplier: configure.multiplier,
+            range: "LOOP_STOP",
+            step: "SYSTEM_CLOCK_MULTIPLIER"
+        }
+    }
+    return header;
+}
+
+var getCzmlPacket = function(id, timeRange, position, profile) {        
+    var packet = {};
+    packet.id = "object/" + id + "/" + Math.round(timeRange.startTime.getTime() / 1000);
+    packet.name = profile.name;
+    packet.availability = [utility.getIntervalStr(timeRange.startTime, timeRange.endTime)];
+    packet.billboard = {
+        image: profile.icon.src,
+        scale: profile.icon.scale,
+        show: true
+    };
+    packet.label = {
+        text: profile.name,
+        fillColor: { rgba:[255, 255, 255, 255] },
+        font: "11pt Lucida Console",
+        horizontalOrigin: "LEFT",
+        outlineColor: { rgba: [ 255,255,255,255 ] },
+        outlineWidth: 2,
+        pixelOffset: { cartesian2: [ 40, 10 ] },
+        show: true,
+        style: "FILL_AND_OUTLINE",
+        verticalOrigin: "CENTER"
+    };
+    packet.position = {
+        interpolationAlgorithm: "LAGRANGE",
+        interpolationDegree: 5,
+        referenceFrame: "INERTIAL",
+        epoch: utility.toTimeStringFormat(timeRange.startTime),
+        cartesian: position        
+    };
+    if(profile.path.show) {
+        packet.path = {
+            show: true,
+            width: 1,
+            material: {
+                solidColor:{
+                    color: {rgba: profile.path.color }
+                }
+            },
+            resolution: 120
+        };
+    }
+    return packet;    
+}
+
+var importLocalProfiles = function(language) {
+    try {
+        switch (language) {
+            case "en":
+                return require('../resources/profile-en');            
+            case "ja":
+                return require('../resources/profile-ja');
+            default:
+                return require('../resources/profile-' + configure.defaultLanguage);
+        }        
+    } catch(ex) {
+        return require('../resources/profile-' + configure.defaultLanguage);
+    }
+}
 
 var convertCatesianPosition = function(position) {
     var list = [];
@@ -82,77 +103,6 @@ var convertCatesianPosition = function(position) {
     }
     return list;
 };
-
-var createSatellitePacket = function(name, startTime, endTime, position, message) {
-    var obj = new Object();
-    var index = Math.round(startTime.getTime() / 1000);
-    switch(name) {
-        case "hinode":
-            obj = profile.hinode(index, startTime, endTime, message);
-            break;
-        case "ibuki":
-            obj = profile.ibuki(index, startTime, endTime, message);
-            break;
-        case "landsat8":
-            obj = profile.landsat8(index, startTime, endTime, message);
-            break;
-        case "debris1":
-            obj = profile.debris1(index, startTime, endTime, message);
-            break;
-        case "debris2":
-            obj = profile.debris2(index, startTime, endTime, message);
-            break;
-        case "debris3":
-            obj = profile.debris3(index, startTime, endTime, message);
-            break;
-    }
-    obj.position = {
-        interpolationAlgorithm: "LAGRANGE",
-        interpolationDegree: 5,
-        referenceFrame: "INERTIAL",
-        epoch: utility.toTimeStringFormat(startTime),
-        cartesian: position
-    };
-    return obj;
-};
-
-var codeToName = function(code) {
-    switch(code) {
-        case 29479:
-            return "hinode";
-        case 33492:
-            return "ibuki";
-        case 39084:
-            return "landsat8";
-        case 32038:
-            return "debris1";
-        case 39244:
-            return "debris2";
-        case 36399:
-            return "debris3";
-        default:
-            return -1;
-    }
-}
-
-var nameToCode = function(name) {
-    switch(name) {
-        case "hinode":
-            return 29479;
-        case "ibuki":
-            return 33492;
-        case "landsat8":
-            return 39084;
-        case "debris1":
-            return 32038;
-        case "debris2":
-            return 39244;
-        case "debris3":
-            return 36399;
-        default:
-            return -1;
-    }
-}
 
 var parseRequestedTime = function(option) {
     var val = option.split("-");
@@ -169,25 +119,20 @@ var parseRequestedTime = function(option) {
  * @param callback コールバック関数
  */
 var loadOrbit = function(startTime, endTime, callback) {
-    // dummy
-    /*
-    if(false) {
-        callback(dummy.cartesian1);
-        return;
-    }*/
-
     var url = getOrbitApiUrl(startTime, endTime);
-    superagent.get(url).end(function(err, res){
-        if (err) {
+    superagent
+        .get(url)
+        .on('error', function(err) {
             console.log(err);
-            return;
-        }
-        callback(res.text);
-    });
+        }).end(function(err, res){
+            if(res.body) {
+                callback(res.body);
+            }            
+        });
 };
 
 var getOrbitApiUrl = function(startTime, endTime) {
-    var url = "http://" + configure.orbitApi + ":" + configure.orbitApiPort;
+    var url = "http://" + configure.orbitApi;
     var sTime = Math.round(startTime.getTime() / 1000);
     var eTime = Math.round(endTime.getTime() / 1000);
     return url + "/xyz?start=" + sTime + "&end=" + eTime;
@@ -195,17 +140,20 @@ var getOrbitApiUrl = function(startTime, endTime) {
 
 module.exports = {
     handler: function(req, res) {
-        var command = req.params.command;
-        var option = req.params.option;
-        console.log("command:" + command);
-        console.log("option:" + option);
-
-        switch(command) {
-            case 'default':
-                renderDefault(req, res);
-                break;
-            case 'get':
-                renderNextCzml(req, res);
+        var language = req.params.language || configure.defaultLanguage;
+        var timeRange = parseRequestedTime(req.params.timerange);
+        
+        if(timeRange == undefined) {
+            res.status(400);
+            res.end("Specify starttime-endtime");
         }
+        
+        var localProfiles = importLocalProfiles(language);
+        var profiles = merge.recursive(commonProfiles, localProfiles);
+        
+        loadOrbit(timeRange.startTime, timeRange.endTime, function(data) {
+            var czml = createCzml(data, timeRange, profiles);
+            res.json(czml);       
+        });
     }
 };
