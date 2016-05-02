@@ -2,7 +2,7 @@
 var assert = require('assert');
 var rewire = require('rewire');
 var configure = require('../configure');
-var CzmlController = rewire('./CzmlController');
+var CzmlController = rewire('./czml-controller');
 
 describe('CzmlController', function() {
     describe('parseRequestedTime', function() {
