@@ -42,7 +42,7 @@ function getNextTimeRange(clock) {
 }
 
 function getApiUrl(timeRange) {
-    return '/api/czml/get/' + timeRange.startTime + "-" + timeRange.stopTime;
+    return '/api/czml/' + timeRange.startTime + "-" + timeRange.stopTime;
 }
 
 module.exports = function () {
@@ -67,7 +67,7 @@ module.exports = function () {
         blackMarble.brightness = 1.0;
     }
     viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
-    viewer.dataSources.add(Cesium.CzmlDataSource.load('/api/czml/default'));
+    //viewer.dataSources.add(Cesium.CzmlDataSource.load('/api/czml/default'));
     viewer.clock.onTick.addEventListener(function (clock) {
         onTickListener(viewer, clock);
     });

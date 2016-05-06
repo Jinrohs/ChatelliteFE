@@ -63,7 +63,7 @@ var autoAdd = function (satelliteName, viewerCurrentTime) {
             return;
         }
 
-        var id = satelliteData[name].id;
+        var id = satelliteData[satelliteName].id;
         var date = Cesium.JulianDate.toDate(viewerCurrentTime);
         var timezoneOffset = date.getTimezoneOffset() * 60;
         var currentTime = Math.round(date.getTime() / 1000) + timezoneOffset;
