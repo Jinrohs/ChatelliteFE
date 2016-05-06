@@ -65,7 +65,6 @@ mixin favicons
     link(rel='icon', type='image/png', sizes='32x32', href='/icons/favicon-32x32.png')
     link(rel='icon', type='image/png', sizes='96x96', href='/icons/favicon-96x96.png')
     link(rel='icon', type='image/png', sizes='16x16', href='/icons/favicon-16x16.png')
-    link(rel='manifest', href='/icons/manifest.json')
     meta(name='msapplication-TileColor', content='#24304E')
     meta(name='msapplication-TileImage', content='/icons/ms-icon-144x144.png')
     meta(name='theme-color', content='#24304E')
@@ -75,8 +74,9 @@ html(lang='ja')
     head
         block meta
             meta(charset='utf-8')
-            title JinrohsFE
-            meta(http-equiv='x-ua-compatible', content='IE=edge')
+            meta(http-equiv='x-ua-compatible', content='ie=edge')
+            title Chatellite
+            meta(name='description', content='the orbits of the satellites and the 'tweets' of satellites that are assigned different personalities.')
             meta(name='viewport', content='width=device-width, initial-scale=1')
         block stylesheet
             +favicons
